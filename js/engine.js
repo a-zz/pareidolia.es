@@ -51,7 +51,7 @@ function navigate()
 			if(site.pages[i].pageid==pageid)
 			{
 				document.title = 'a-zz :: ' + site.pages[i].title;
-				cntnr.innerHTML = 'Added / updated: ' + site.pages[i].date + '<object type="text/html" data="_content/_html/' + site.pages[i].content + '" class="cntnr-html"></object>';					
+				cntnr.innerHTML = 'Added / updated: ' + site.pages[i].date + '<object type="text/html" data="content/html/' + site.pages[i].content + '" class="cntnr-html"></object>';					
 				break;
 			}
 		}
