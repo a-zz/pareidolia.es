@@ -1,0 +1,45 @@
+/* ************************************************************************** 
+ * Mini Javascript-Only CMS - Site layout
+ * ************************************************************************** */
+html, body 			
+	{ height:100%; overflow: hidden; background: #ffffff; color: #000000; font-family: sans-serif; }
+	
+div.cntnr-menu 		
+	{ position: fixed; top: 0px; left: 0px; width: 100%; height: 60px; background-color: #000000; color: #ffffff; border-radius: 0px 0px 35px 5px;}
+	
+div.cntnr-logo 		
+	{ float: left; padding: 5px; }
+	
+div.cntnr-logo > a	
+	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	
+div.cntnr-logo > a:hover	
+	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: underline; }
+		
+div.cntnr-logo > a:active	
+	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	
+div.cntnr-logo > a:visited	
+	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	
+div.cntnr-links 	
+	{ float: right; padding: 5px; padding-right: 25px;}
+	
+div.cntnr-links#hdrmenu > a
+	{ color: #ffffff; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
+	
+div.cntnr-links#hdrmenu > a:hover
+	{ color: #ffffff; margin-top: 3px; text-decoration: underline; top: 5px; }
+		
+div.cntnr-links#hdrmenu > a:active
+	{ color: #ffffff; text-decoration: none; }
+		
+div.cntnr-links#hdrmenu > a:visited
+	{ color: #ffffff; text-decoration: none; }
+		
+div.cntnr-main  	
+	{ margin: 5%; width: 90%; height: 85%; }
+	
+object.cntnr-html	
+	{ width: 100%; height: 100%; }
+/* ************************************************************************** */	
