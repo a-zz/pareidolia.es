@@ -40,7 +40,7 @@ function navigate()
 	}
 	else if(pageId=='random')	// --> Random page
 	{
-		cntnr.innerHTML = 'Go to random page... (pending)'
+		loadPage(randomPage());
 	}
 	else						// --> Selected page
 		loadPage(pageId);
@@ -75,5 +75,10 @@ function findLastPage()
 	}
 	
 	return lastPageId;
+}
+
+function randomPage()
+{
+	return site.pages[Math.floor(Math.random() * site.pages.length)].pageid;
 }
 /* ************************************************************************** */
