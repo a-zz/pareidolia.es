@@ -7,16 +7,16 @@ var site = {
 	"indexpage":"#about",
 	"menu":
 	[
-		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"#about", "exturl":null},
+		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"~about", "exturl":null},
 		{"menuid":"menu_github", "text":"Powered by GitHub!", "title":"Powered by GitHub!", "pageid":null, "exturl":"http://github.com"}
 	],
 	"pages":
 	[
-		{"pageid":"#about", "title":"About this site and myself", "description":"The usual 'about' page", "date":"201703031247", "content":"about.html"},
-		{"pageid":"#pageid1", "title":"title1", "description":"description1", "date":"201703031235", "content":"content1.html"},
-		{"pageid":"#pageid2", "title":"title2", "description":"description2", "date":"201703031235", "content":"content2.html"},
-		{"pageid":"#pageid3", "title":"title3", "description":"description3", "date":"201703031235", "content":"content3.html"},
-		{"pageid":"#pageid4", "title":"title4", "description":"description4", "date":"201703031235", "content":"content4.html"}
+		{"pageid":"~about", "title":"About this site and myself", "description":"The usual 'about' page", "date":"201703031247", "content":"about.html"},
+		{"pageid":"~pageid1", "title":"title1", "description":"description1", "date":"201703031235", "content":"content1.html"},
+		{"pageid":"~pageid2", "title":"title2", "description":"description2", "date":"201703031235", "content":"content2.html"},
+		{"pageid":"~pageid3", "title":"title3", "description":"description3", "date":"201703031235", "content":"content3.html"},
+		{"pageid":"~pageid4", "title":"title4", "description":"description4", "date":"201703031235", "content":"content4.html"}
 	]	
 }
 /* ************************************************************************** */
