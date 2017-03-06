@@ -22,39 +22,58 @@ function drawHeader()
 }
 
 function navigate()
-{
-	var cntnr = window.document.getElementById('main');
-	
+{	
 	var url = window.location.href;
-	var pageid = null;
+	var pageId = null;
 	if(url.lastIndexOf('?')!=-1)
-		pageid = url.substring(url.lastIndexOf('?')+1);
+		pageId = url.substring(url.lastIndexOf('?')+1);
 	else
-		pageid = site.indexpage;
+		pageId = site.indexpage;
 	
-	if(pageid=='map')			// --> Map: all pages, in chronological ord.
+	if(pageId=='map')			// --> Map: all pages, in chronological ord.
 	{
 		cntnr.innerHTML = 'Generate site map... (pending)'
 	}
-	else if(pageid=='last')		// --> Last: last page added
+	else if(pageId=='last')		// --> Last: last page added
 	{
-		cntnr.innerHTML = 'Go to last page added... (pending)'
+		loadPage(findLastPage());
 	}
-	else if(pageid=='random')	// --> Random page
+	else if(pageId=='random')	// --> Random page
 	{
 		cntnr.innerHTML = 'Go to random page... (pending)'
 	}
 	else						// --> Selected page
+		loadPage(pageId);
+}
+
+function loadPage(pageId)
+{
+	var cntnr = window.document.getElementById('main');
+
+	for(var i = 0; i<site.pages.length; i++)
 	{
-		for(var i = 0; i<site.pages.length; i++)
+		if(site.pages[i].pageid==pageId)
 		{
-			if(site.pages[i].pageid==pageid)
-			{
-				document.title = 'a-zz :: ' + site.pages[i].title;
-				cntnr.innerHTML = 'Added / updated: ' + site.pages[i].date + '<object type="text/html" data="content/html/' + site.pages[i].content + '" class="cntnr-html"></object>';					
-				break;
-			}
+			document.title = site.name + ' :: ' + site.pages[i].title;
+			cntnr.innerHTML = 'Added / updated: ' + site.pages[i].date + '<object type="text/html" data="content/html/' + site.pages[i].content + '" class="cntnr-html"></object>';					
+			break;
 		}
 	}
+}
+
+function findLastPage()
+{
+	var lastDate = 0;
+	var lastPageId = null;
+	for(var i = 0; i<site.pages.length; i++)
+	{
+		if(site.pages[i].date>lastDate)
+		{
+			lastDate = site.pages[i].date;
+			lastPageId = site.pages[i].pageid; 
+		}
+	}
+	
+	return lastPageId;
 }
 /* ************************************************************************** */
