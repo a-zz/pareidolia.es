@@ -4,7 +4,7 @@
 var site = {
 	"name":"a-zz",
 	"description":"software, etc.",
-	"indexpage":"#about",
+	"indexpage":"~about",
 	"menu":
 	[
 		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"~about", "exturl":null},
