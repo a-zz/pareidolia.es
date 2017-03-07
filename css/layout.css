@@ -54,4 +54,20 @@ a.tag:hover
 	
 a.selected
 	{ border: 2px solid #000000; font-weight: bold; }	
+	
+div.cntnr-history > ul > li 
+	{ margin-bottom: 10px; }
+	
+div.cntnr-history > ul > li > a.page-title
+	{ font-weight: bold; text-decoration: none; color: #000000; }
+	
+div.cntnr-history > ul > li > a.page-title:active,visited
+	{ color: #000000; }
+	
+div.cntnr-history > ul > li > a.page-title:hover	
+	{ text-decoration: underline; }
+	
+div.cntnr-history > ul > li > span.page-description
+	{ font-size: 90%; font-style: italic; }	
+				
 /* ************************************************************************** */	

@@ -110,7 +110,7 @@ function renderSiteMap(selectedTag)
 	cntntHTML += '<div class="cntnr-history"><h2>All contents by: History' + (selectedTag!=''?' (filtered)':'') + '</h2><ul>';
 	for(var i = 0; i<history.length; i++)
 	{
-		cntntHTML += '<li>(' + formatDate(history[i].date) + ')&nbsp;<a href="index.html?' + history[i].pageid + '">' + history[i].title + '</a>&nbsp;';
+		cntntHTML += '<li>(' + formatDate(history[i].date) + ')&nbsp;<a href="index.html?' + history[i].pageid + '" class="page-title">' + history[i].title + '</a>&nbsp;';
 		var pageTags = history[i].tags.split(';');
 		for(var j =0; j<pageTags.length; j++)
 			cntntHTML += renderTag(pageTags[j], false);
