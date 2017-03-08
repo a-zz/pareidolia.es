@@ -25,7 +25,7 @@ function navigate()
 	
 	if(pageId.startsWith('~map'))	// --> Map: all pages
 	{
-		renderSiteMap(pageId.substring(4));
+		renderSiteMap(pageId.substring(5));
 	}
 	else if(pageId=='~last')			// --> Last: last page added
 	{
