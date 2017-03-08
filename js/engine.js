@@ -23,15 +23,15 @@ function navigate()
 	else
 		pageId = site.indexpage;
 	
-	if(pageId.startsWith('map'))	// --> Map: all pages
+	if(pageId.startsWith('~map'))	// --> Map: all pages
 	{
 		renderSiteMap(pageId.substring(4));
 	}
-	else if(pageId=='last')			// --> Last: last page added
+	else if(pageId=='~last')			// --> Last: last page added
 	{
 		renderPage(findLastPage());
 	}
-	else if(pageId=='random')		// --> Random page
+	else if(pageId=='~random')		// --> Random page
 	{
 		renderPage(randomPage());
 	}
@@ -54,7 +54,7 @@ function renderHeader()
 		
 	// Draw the site menu
 	var hdrmenu = window.document.getElementById('hdrmenu');
-	var innerHTML = 'Go to: <a href="index.html?map" title="All pages (site map)" class="hdrmenu">All</a> | <a href="index.html?last" title="Last page added" class="hdrmenu">Last</a> | <a href="index.html?random" title="Random page" class="hdrmenu">Random</a>';	
+	var innerHTML = 'Go to: <a href="index.html?~map" title="All pages (site map)" class="hdrmenu">All</a> | <a href="index.html?~last" title="Last page added" class="hdrmenu">Last</a> | <a href="index.html?~random" title="Random page" class="hdrmenu">Random</a>';	
 	for(var i = 0; i<site.menu.length; i++)
 		innerHTML += ' ·&nbsp<a href="' + (site.menu[i].pageid!=null?"index.html?" + site.menu[i].pageid:site.menu[i].exturl) + '" title="' + site.menu[i].title + '" class="hdrmenu" id="' + site.menu[i].menuid + '">' + site.menu[i].text + '</a>';
 	
@@ -131,7 +131,7 @@ function renderSiteMap(selectedTag)
 function renderTag(tag, selected, showNoTag)
 {
 	if(tag!='' || showNoTag)
-		return '<a href="index.html?map-' + tag + '" class="tag' + (selected?' selected':'') + '">' + (tag!=''?tag:'(no tag)') + '</a>';
+		return '<a href="index.html?~map-' + tag + '" class="tag' + (selected?' selected':'') + '">' + (tag!=''?tag:'(no tag)') + '</a>';
 	else 
 		return '';
 }
