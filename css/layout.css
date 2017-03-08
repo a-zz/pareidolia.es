@@ -2,11 +2,20 @@
  * Mini Javascript-Only CMS - Site layout
  * ************************************************************************** */
 html, body 			
-	{ height:100%; overflow: hidden; background: #ffffff; color: #000000; font-family: sans-serif; }
+	{ height:100%; overflow: hidden; background: #ffffff; color: #000000; font-family: sans-serif; margin: 0px; }
+
+a.tag
+	{ border: 1px solid #000000; border-radius: 3px; padding: 1px; padding-left: 3px; padding-right: 3px; margin: 0px; margin-left: 3px; margin-right: 3px; text-decoration: none; transition: 0.25s;}
 	
-div.cntnr-menu 		
-	{ position: fixed; top: 0px; left: 0px; width: 100%; height: 60px; background-color: #000000; color: #ffffff; border-radius: 0px 0px 35px 5px;}
+a.tag:visited,active
+	{ color: #000000; }
+
+a.tag:hover
+	{ border: 2px solid #000000; }
 	
+a.selected
+	{ border: 2px solid #000000; font-weight: bold; }	
+
 div.cntnr-logo 		
 	{ float: left; padding: 5px; }
 	
@@ -22,11 +31,14 @@ div.cntnr-logo > a:active
 div.cntnr-logo > a:visited	
 	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
 	
+div.cntnr-menu 		
+	{ width: 100%; height: 65px; background-color: #000000; color: #ffffff; border-radius: 0px 0px 35px 5px; text-align: right; }	
+	
 div.cntnr-links 	
 	{ float: right; padding: 5px; padding-right: 25px;}
 	
 div.cntnr-links#hdrmenu > a
-	{ color: #ffffff; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
+	{ color: #ffffff; background-color: #000000; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
 	
 div.cntnr-links#hdrmenu > a:hover
 	{ color: #ffffff; margin-top: 3px; text-decoration: underline; top: 5px; }
@@ -38,23 +50,11 @@ div.cntnr-links#hdrmenu > a:visited
 	{ color: #ffffff; text-decoration: none; }
 		
 div.cntnr-main  	
-	{ margin: 5%; width: 90%; height: 85%; }
+	{ margin: 5%; width: 90%; height: 75%; }
 	
 object.cntnr-html	
 	{ width: 100%; height: 100%; }
-	
-a.tag
-	{ border: 1px solid #000000; border-radius: 3px; padding: 1px; padding-left: 3px; padding-right: 3px; margin: 0px; margin-left: 3px; margin-right: 3px; text-decoration: none; transition: 0.25s;}
-	
-a.tag:visited,active
-	{ color: #000000; }
-
-a.tag:hover
-	{ border: 2px solid #000000; }
-	
-a.selected
-	{ border: 2px solid #000000; font-weight: bold; }	
-	
+		
 div.cntnr-history > ul > li 
 	{ margin-bottom: 10px; }
 	

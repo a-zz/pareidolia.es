@@ -50,13 +50,13 @@ function renderHeader()
 {
 	// Draw the logo (site name & description)
 	var hdrlogo = window.document.getElementById('hdrlogo');
-	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a>&nbsp;' + site.description;
+	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a> ' + site.description;
 		
 	// Draw the site menu
 	var hdrmenu = window.document.getElementById('hdrmenu');
-	var innerHTML = 'Go to:&nbsp;<a href="index.html?map" title="All pages (site map)" class="hdrmenu">All</a>&nbsp;|&nbsp;<a href="index.html?last" title="Last page added" class="hdrmenu">Last</a>&nbsp;|&nbsp;<a href="index.html?random" title="Random page" class="hdrmenu">Random</a>';	
+	var innerHTML = 'Go to: <a href="index.html?map" title="All pages (site map)" class="hdrmenu">All</a> | <a href="index.html?last" title="Last page added" class="hdrmenu">Last</a> | <a href="index.html?random" title="Random page" class="hdrmenu">Random</a>';	
 	for(var i = 0; i<site.menu.length; i++)
-		innerHTML += '&nbsp;·&nbsp<a href="' + (site.menu[i].pageid!=null?"index.html?" + site.menu[i].pageid:site.menu[i].exturl) + '" title="' + site.menu[i].title + '" class="hdrmenu" id="' + site.menu[i].menuid + '">' + site.menu[i].text + '</a>';
+		innerHTML += ' ·&nbsp<a href="' + (site.menu[i].pageid!=null?"index.html?" + site.menu[i].pageid:site.menu[i].exturl) + '" title="' + site.menu[i].title + '" class="hdrmenu" id="' + site.menu[i].menuid + '">' + site.menu[i].text + '</a>';
 	
 	innerHTML += '<br/>Main tags:';
 	var tagList = getSiteTagListByContent(3);
@@ -83,8 +83,8 @@ function renderPage(pageId)
 		tagLinks += renderTag(tagList[j], false, false);
 
 	document.title = site.name + ' :: ' + page.title;
-	cntnr.innerHTML = 'Added / updated: ' + formatDate(page.date) +
-					  (tagLinks!=''?'&nbsp;' + tagLinks:'') + 
+	cntnr.innerHTML = '<p class="page-hdr"> ' + page.title + ' (' + formatDate(page.date) + ')' +
+					  (tagLinks!=''?' ' + tagLinks:'') + '</p>' + 
 					  '<object type="text/html" data="content/html/' + page.content + '" class="cntnr-html"></object>';					
 }
 
@@ -110,7 +110,7 @@ function renderSiteMap(selectedTag)
 	cntntHTML += '<div class="cntnr-history"><h2>All contents by: History' + (selectedTag!=''?' (filtered)':'') + '</h2><ul>';
 	for(var i = 0; i<history.length; i++)
 	{
-		cntntHTML += '<li>(' + formatDate(history[i].date) + ')&nbsp;<a href="index.html?' + history[i].pageid + '" class="page-title">' + history[i].title + '</a>&nbsp;';
+		cntntHTML += '<li>(' + formatDate(history[i].date) + ') <a href="index.html?' + history[i].pageid + '" class="page-title">' + history[i].title + '</a> ';
 		var pageTags = history[i].tags.split(';');
 		for(var j =0; j<pageTags.length; j++)
 			cntntHTML += renderTag(pageTags[j], false);
