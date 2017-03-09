@@ -6,7 +6,9 @@
 function start()
 {
 	renderHeader();
+	renderFooter();
 	navigate();
+	window.addEventListener('resize', adjustContentHeight);
 }
 
 // Navigate to some content (referred in the URL)
@@ -27,7 +29,7 @@ function navigate()
 	{
 		renderSiteMap(pageId.substring(5));
 	}
-	else if(pageId=='~last')			// --> Last: last page added
+	else if(pageId=='~last')		// --> Last: last page added
 	{
 		renderPage(findLastPage());
 	}
@@ -54,7 +56,7 @@ function renderHeader()
 		
 	// Draw the site menu
 	var hdrmenu = window.document.getElementById('hdrmenu');
-	var innerHTML = 'Go to: <a href="index.html?~map" title="All pages (site map)" class="hdrmenu">All</a> | <a href="index.html?~last" title="Last page added" class="hdrmenu">Last</a> | <a href="index.html?~random" title="Random page" class="hdrmenu">Random</a>';	
+	var innerHTML = 'Go to: <a href="index.html?~map" title="Page index (site map)" class="hdrmenu">Index</a> | <a href="index.html?~last" title="Last page added" class="hdrmenu">Last</a> | <a href="index.html?~random" title="Random page" class="hdrmenu">Random</a>';	
 	for(var i = 0; i<site.menu.length; i++)
 		innerHTML += ' ·&nbsp<a href="' + (site.menu[i].pageid!=null?"index.html?" + site.menu[i].pageid:site.menu[i].exturl) + '" title="' + site.menu[i].title + '" class="hdrmenu" id="' + site.menu[i].menuid + '">' + site.menu[i].text + '</a>';
 	
@@ -64,6 +66,13 @@ function renderHeader()
 		innerHTML += renderTag(tagList[i], false, false);
 		
 	hdrmenu.innerHTML = innerHTML;
+}
+
+function renderFooter()
+{
+	// Draw the logo (site name & description)
+	var ftr = window.document.getElementById('cntnr-ftr');
+	ftr.innerHTML = '<a href="index.html">' + site.name + ' :: ' + site.description + '</a>, ' + lastUpdateYear();
 }
 
 // Render a content page
@@ -83,9 +92,9 @@ function renderPage(pageId)
 		tagLinks += renderTag(tagList[j], false, false);
 
 	document.title = site.name + ' :: ' + page.title;
-	cntnr.innerHTML = '<p class="page-hdr"> ' + page.title + ' (' + formatDate(page.date) + ')' +
-					  (tagLinks!=''?' ' + tagLinks:'') + '</p>' + 
-					  '<object type="text/html" data="content/html/' + page.content + '" class="cntnr-html"></object>';					
+	cntnr.innerHTML = '<p class="page-hdr">' + page.title + ' (' + formatDate(page.date) + ')' +
+					  (tagLinks!=''?' ' + tagLinks:'') + '</p>' +
+					  '<object type="text/html" data="content/html/' + page.content + '" class="cntnr-html" id="cntnr-html" onload="adjustContentHeight();"></object>';
 }
 
 // Render the site map
@@ -236,6 +245,21 @@ function getSiteHistory(selectedTag)
 	return history;
 }
 
+function lastUpdateYear()
+{
+	var currentYear = new Date().getFullYear();
+	var lastYear = 1972;
+	for(var i = 0; i<site.pages.length; i++)
+	{
+		if(site.pages[i].date.substring(0, 4)==currentYear)			
+			return currentYear;
+		else if(site.pages[i].date.substring(0, 4)>lastYear)
+			lastYear = site.pages[i].substring(0, 4);
+	}
+		
+	return lastYear;
+}
+
 /* ** Utility functions ***************************************************** */
 
 // Format date in a human readable fashion 
@@ -252,4 +276,13 @@ function formatDate(date)
 		   date.substring(10);
 }
 
+/* ** Event handling ******************************************************** */
+function adjustContentHeight()
+{
+	var cntnr = window.document.getElementById('cntnr-html');
+	
+	// FIXME Avoid the 1.1; find why is that extra height needed
+	cntnr.style.height=(1.1 * cntnr.contentDocument.body.offsetHeight) + 'px';
+	cntnr.style.visibility='visible';
+}
 /* ************************************************************************** */
