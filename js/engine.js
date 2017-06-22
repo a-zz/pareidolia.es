@@ -1,14 +1,32 @@
 /* ************************************************************************** 
  * Mini JavaScript-Only CMS - Engine
+ * (non fully-standard JavaScript notation, sorry!) 
  * ************************************************************************** */
 
 // This function should be fired on body.onload()!
 function start()
 {
+	addSiteMeta();
 	renderHeader();
 	renderFooter();
 	navigate();
 	window.addEventListener('resize', adjustContentHeight);
+}
+
+// Add site metadata
+// Arguments: 
+//	(none)
+// Returns:
+//	(nothing) 
+function addSiteMeta()
+{
+	for(var i = 0; i<site.meta.length; i++)
+	{
+		var meta = document.createElement("meta");
+		meta.httpEquiv = site.meta[i].httpEquiv;
+		meta.content = site.meta[i].content;
+		document.getElementsByTagName('head')[0].appendChild(meta);
+	}
 }
 
 // Navigate to some content (referred in the URL)
@@ -90,7 +108,7 @@ function renderPage(pageId)
 	var tagList = page.tags.split(';');
 	for(var j = 0; j<tagList.length; j++)
 		tagLinks += renderTag(tagList[j], false, false);
-
+	
 	document.title = site.name + ' :: ' + page.title;
 	cntnr.innerHTML = '<div class="page-hdr">' + page.title + ' (' + formatDate(page.date) + ')' +
 					  (tagLinks!=''?' ' + tagLinks:'') + '</div>' +

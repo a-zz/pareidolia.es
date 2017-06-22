@@ -5,6 +5,11 @@ var site = {
 	"name":"a-zz",
 	"description":"computers, etc.",
 	"indexpage":"about",
+	"meta":
+	[
+		{"httpEquiv":"description", "content":"brⱯvⱯs: Mini JavaScript-only CMS - Proof of concept!"},
+		{"httpEquiv":"author", "content":"https://github.com/a-zz"}
+	],
 	"menu":
 	[
 		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"about", "exturl":null},
