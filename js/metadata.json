@@ -3,7 +3,7 @@
  * ************************************************************************** */
 var site = {
 	"name":"a-zz",
-	"description":"software, etc.",
+	"description":"computers, etc.",
 	"indexpage":"about",
 	"menu":
 	[

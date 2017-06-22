@@ -52,7 +52,7 @@ function renderHeader()
 {
 	// Draw the logo (site name & description)
 	var hdrlogo = window.document.getElementById('hdrlogo');
-	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a> ' + site.description;
+	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a> ' + site.description + '$ <span class="cursor">&#x2589;</span>';
 		
 	// Draw the site menu
 	var hdrmenu = window.document.getElementById('hdrmenu');
@@ -92,8 +92,8 @@ function renderPage(pageId)
 		tagLinks += renderTag(tagList[j], false, false);
 
 	document.title = site.name + ' :: ' + page.title;
-	cntnr.innerHTML = '<p class="page-hdr">' + page.title + ' (' + formatDate(page.date) + ')' +
-					  (tagLinks!=''?' ' + tagLinks:'') + '</p>' +
+	cntnr.innerHTML = '<div class="page-hdr">' + page.title + ' (' + formatDate(page.date) + ')' +
+					  (tagLinks!=''?' ' + tagLinks:'') + '</div>' +
 					  '<object type="text/html" data="content/html/' + page.content + '" class="cntnr-html" id="cntnr-html" onload="adjustContentHeight();"></object>';
 }
 
@@ -282,7 +282,6 @@ function adjustContentHeight()
 	var cntnr = window.document.getElementById('cntnr-html');
 	
 	// FIXME Avoid the 1.1; find why is that extra height needed
-	cntnr.style.height=(1.1 * cntnr.contentDocument.body.offsetHeight) + 'px';
-	cntnr.style.visibility='visible';
+	cntnr.style.height = (1.1 * cntnr.contentDocument.body.offsetHeight) + 'px';
 }
 /* ************************************************************************** */

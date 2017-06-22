@@ -2,7 +2,7 @@
  * Mini Javascript-Only CMS - Site layout
  * ************************************************************************** */
 html, body 			
-	{ background: #ffffff; color: #000000; font-family: sans-serif; margin: 0px; }
+	{ background-image: url(../img/bg.jpg); background-repeat: repeat; color: #000000; font-family: monospace; font-size: large; font-weight: 500; margin: 0px; }
 
 a
 	{ color: #000000; text-decoration: none;}
@@ -24,43 +24,51 @@ a.selected
 	{ border: 2px solid #000000; font-weight: bold; }	
 
 div.cntnr-menu 		
-	{ position: fixed; top: 0px; left: 0px; width: 100%; height: 65px; background-color: #000000; color: #ffffff; border-radius: 0px 0px 35px 5px; text-align: right;  }	
+	{ position: fixed; top: 0px; left: 0px; width: 100%; height: 65px; background-color: #000000; color: #00aa00; border-bottom: 1px solid #00ff00; border-radius: 0px 0px 35px 5px; text-align: right;  }	
 
 div.cntnr-logo 		
 	{ float: left; padding: 5px; }
 	
 div.cntnr-logo > a	
-	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	{ color: #00ff00; font-size: 300%; font-weight: bold; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
 	
 div.cntnr-logo > a:hover	
-	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: underline; }
+	{ color: #00ff00; font-size: 300%; font-weight: bold; text-decoration: underline; top: 3px; }
 		
 div.cntnr-logo > a:active	
-	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	{ color: #00ff00; font-size: 300%; font-weight: bold; text-decoration: none; }
 	
 div.cntnr-logo > a:visited	
-	{ color: #ffffff; font-size: 300%; font-weight: bold; text-decoration: none; }
+	{ color: #00ff00; font-size: 300%; font-weight: bold; text-decoration: none; }
+
+div.cntnr-logo > span.cursor
+	{ color: #00ff00; animation: cursor-blink .75s linear infinite; }
+	
+@keyframes cursor-blink { 0% { opacity: 1; } 50% { opacity: 1; } 50.01% { opacity: 0; } 100% { opacity: 0; } }	
 
 div.cntnr-links
 	{ padding: 1%; }
+	
+div.cntnr-links > br
+	{ margin-top: 3px; margin-bottom: 3px; }	
 			
 div.cntnr-links#hdrmenu > a
-	{ color: #ffffff; background-color: #000000; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
+	{ color: #00ff00; background-color: #000000; text-decoration: none; position: relative; top: 0px; transition: top 0.25s; }
 	
 div.cntnr-links#hdrmenu > a:hover
-	{ color: #ffffff; margin-top: 3px; text-decoration: underline; top: 5px; }
+	{ color: #00ff00; margin-top: 3px; text-decoration: underline; top: 3px; }
 		
 div.cntnr-links#hdrmenu > a:active
-	{ color: #ffffff; text-decoration: none; }
+	{ color: #00ff00; text-decoration: none; }
 		
 div.cntnr-links#hdrmenu > a:visited
-	{ color: #ffffff; text-decoration: none; }
+	{ color: #00ff00; text-decoration: none; }
 		
 div.cntnr-main  	
-	{ margin: 5%; margin-top: 80px; width: 90%; overflow: visible; }
+	{ margin: 5%; margin-top: 80px; width: 90%; font-family: sans-serif; font-size: medium; }
 	
 object.cntnr-html	
-	{ width: 100%; visibility: hidden; transition: visibility 0.5s; overflow: visible; }
+	{ width: 100%; height: 100px; overflow: hidden; }
 		
 div.cntnr-history > ul > li 
 	{ margin-bottom: 10px; }
