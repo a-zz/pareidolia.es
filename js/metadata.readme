@@ -35,7 +35,7 @@ Currently known special pages are:
 ..:: Defining metas ::..
 HTML <meta> tags can be added to the site pages by placing elements in the
 site.meta array, each one containing the fields:
-  .httpEquiv
+  .httpequiv
   .content
 Each one of these elements is written to the generated page as a 
   <meta http-equiv="***" content="***" />

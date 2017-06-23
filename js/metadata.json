@@ -7,8 +7,8 @@ var site = {
 	"indexpage":"about",
 	"meta":
 	[
-		{"httpEquiv":"description", "content":"brⱯvⱯs: Mini JavaScript-only CMS - Proof of concept!"},
-		{"httpEquiv":"author", "content":"https://github.com/a-zz"}
+		{"httpequiv":"description", "content":"brⱯvⱯs: Mini JavaScript-only CMS - Proof of concept!"},
+		{"httpequiv":"author", "content":"https://github.com/a-zz"}
 	],
 	"menu":
 	[
