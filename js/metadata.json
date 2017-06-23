@@ -1,5 +1,5 @@
 /* ************************************************************************** 
- * Mini Javascript-Only CMS - Site metadata
+ * brⱯvⱯs: Mini JavaScript-only CMS - Site metadata
  * ************************************************************************** */
 var site = {
 	"name":"a-zz",
