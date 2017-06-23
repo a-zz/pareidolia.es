@@ -1,5 +1,5 @@
 /* ************************************************************************** 
- * brⱯvⱯs: Mini JavaScript-only CMS - Site metadata manual
+ * bravas: Mini JavaScript-only CMS - Site metadata manual
  * ************************************************************************** */
  
 Site content is described as a JSON object structured as:

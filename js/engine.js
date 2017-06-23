@@ -1,5 +1,5 @@
 /* ************************************************************************** 
- * Mini JavaScript-Only CMS - Engine
+ * bravas: Mini JavaScript-Only CMS - Engine
  * (non fully-standard JavaScript notation, sorry!) 
  * ************************************************************************** */
 
