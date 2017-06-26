@@ -283,6 +283,7 @@ function getSiteTagListByContent(n)
 //	(Array) An array of "page" elements (as defined in metadata.json > site)
 function getSiteHistory(selectedTag)
 {
+	selectedTag = decodeURI(selectedTag);
 	var history = new Array();
 	
 	var ordrdPageIds = new Array();
