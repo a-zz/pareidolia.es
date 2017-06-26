@@ -78,7 +78,7 @@ function renderHeader()
 	for(var i = 0; i<site.menu.length; i++)
 		innerHTML += ' ·&nbsp<a href="' + (site.menu[i].pageid!=null?"index.html?" + site.menu[i].pageid:site.menu[i].exturl) + '" title="' + site.menu[i].title + '" class="hdrmenu" id="' + site.menu[i].menuid + '">' + site.menu[i].text + '</a>';
 	
-	innerHTML += '<br/>Main tags:';
+	innerHTML += '<br/>Top tags:';
 	var tagList = getSiteTagListByContent(3);
 	for(var i = 0; i<tagList.length; i++)
 		innerHTML += renderTag(tagList[i], false, false);
@@ -238,8 +238,42 @@ function getSiteTagList()
 //	(Array) A list of tags
 function getSiteTagListByContent(n)
 {
-	// TODO Not implemented yet! Temporary code:
-	return getSiteTagList();
+	var topTags = new Array();
+	var tagCounters = new Array();
+	var tagList = getSiteTagList();
+	
+	// Counting pages by tag
+	for(var i = 0; i<tagList.length; i++)
+	{
+		if(tagList[i]=='')
+			continue; // Only interested in non-empty tags
+		topTags.push(tagList[i]);
+		tagCounters.push(getSiteHistory(tagList[i]).length);
+	}
+	
+	// Sorting by page count
+	var stillUnsorted = true;
+	while(stillUnsorted)
+	{
+		stillUnsorted = false;
+		for(var i = 0; i<topTags.length-1; i++)
+		{
+			if(tagCounters[i]<tagCounters[i+1])
+			{
+				var tag = topTags[i+1];
+				var counter = tagCounters[i+1];
+				topTags[i+1] = topTags[i];
+				tagCounters[i+1] = tagCounters[i];
+				topTags[i] = tag;
+				tagCounters[i] = counter;
+				stillUnsorted = true;
+				continue;
+			}
+		}
+	}
+	
+	// Returning the first n tags	
+	return topTags.slice(0, n);
 }
 
 // Retrieve all pages in reverse chronological order
