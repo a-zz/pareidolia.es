@@ -22,7 +22,7 @@ function addSiteMeta()
 {
 	for(var i = 0; i<site.meta.length; i++)
 	{
-		var meta = document.createElement("meta");
+		var meta = document.createElement('meta');
 		meta.httpEquiv = site.meta[i].httpequiv;
 		meta.content = site.meta[i].content;
 		document.getElementsByTagName('head')[0].appendChild(meta);
