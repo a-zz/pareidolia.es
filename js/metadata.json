@@ -17,11 +17,7 @@ var site = {
 	],
 	"pages":
 	[
-		{"pageid":"about", "title":"About this site", "description":"The usual and time-honored 'about' page", "date":"201703031426", "content":"about.html", "tags":""},
-		{"pageid":"pageid1", "title":"title1", "description":"description1", "date":"201703031235", "content":"content1.html", "tags":"tag1;tag2"},
-		{"pageid":"pageid2", "title":"title2", "description":"description2", "date":"201702031235", "content":"content2.html", "tags":"tag3"},
-		{"pageid":"pageid3", "title":"title3", "description":"description3", "date":"201701031235", "content":"content3.html", "tags":"tag1;tag3"},
-		{"pageid":"pageid4", "title":"title4", "description":"description4", "date":"201703031255", "content":"content4.html", "tags":"tag2"}
+		{"pageid":"about", "title":"About this site", "description":"The usual and time-honored 'about' page", "date":"201703031426", "content":"about.html", "tags":"brⱯvⱯs"},
 	]	
 }
 /* ************************************************************************** */
