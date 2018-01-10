@@ -307,7 +307,7 @@ function lastUpdateYear()
 		if(site.pages[i].date.substring(0, 4)==currentYear)			
 			return currentYear;
 		else if(site.pages[i].date.substring(0, 4)>lastYear)
-			lastYear = site.pages[i].substring(0, 4);
+			lastYear = site.pages[i].date.substring(0, 4);
 	}
 		
 	return lastYear;
