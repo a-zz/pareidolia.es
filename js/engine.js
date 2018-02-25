@@ -1,11 +1,10 @@
 /* ************************************************************************** 
- * bravas: Mini JavaScript-Only CMS - Engine
- * (non fully-standard JavaScript notation, sorry!) 
+ * bravas: Mini JavaScript-Only CMS - Engine                                +
  * ************************************************************************** */
 
 // This function should be fired on body.onload()!
-function start()
-{
+function start() {
+	
 	addSiteMeta();
 	renderHeader();
 	renderFooter();
@@ -18,8 +17,8 @@ function start()
 //	(none)
 // Returns:
 //	(nothing) 
-function addSiteMeta()
-{
+function addSiteMeta() {
+	
 	for(var i = 0; i<site.meta.length; i++)
 	{
 		var meta = document.createElement('meta');
@@ -34,8 +33,8 @@ function addSiteMeta()
 //	(none)
 // Returns:
 //	(nothing) 
-function navigate()
-{	
+function navigate() {
+	
 	var url = window.location.href;
 	var pageId = null;
 	if(url.lastIndexOf('?')!=-1)
@@ -44,17 +43,11 @@ function navigate()
 		pageId = site.indexpage;
 	
 	if(pageId.startsWith('~map'))	// --> Map: all pages
-	{
 		renderSiteMap(pageId.substring(5));
-	}
 	else if(pageId=='~last')		// --> Last: last page added
-	{
 		renderPage(findLastPage());
-	}
 	else if(pageId=='~random')		// --> Random page
-	{
 		renderPage(randomPage());
-	}
 	else							// --> Selected page
 		renderPage(pageId);
 }
@@ -66,8 +59,8 @@ function navigate()
 //	(none)
 // Returns:
 //	(nothing)
-function renderHeader()
-{
+function renderHeader() {
+	
 	// Draw the logo (site name & description)
 	var hdrlogo = window.document.getElementById('hdrlogo');
 	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a> ' + site.description + '$ <span class="cursor">&#x2589;</span>';
@@ -86,8 +79,13 @@ function renderHeader()
 	hdrmenu.innerHTML = innerHTML;
 }
 
-function renderFooter()
-{
+//Renders the site footer (not too much to show).
+//Arguments: 
+//	(none)
+//Returns:
+//	(nothing)
+function renderFooter() {
+	
 	// Draw the logo (site name & description)
 	var ftr = window.document.getElementById('cntnr-ftr');
 	ftr.innerHTML = '<a href="index.html">' + site.name + ' :: ' + site.description + '</a>, ' + lastUpdateYear();
@@ -99,8 +97,8 @@ function renderFooter()
 //		metadata.json > site > pages).
 // Returns:
 //	(nothing)
-function renderPage(pageId)
-{
+function renderPage(pageId) {
+	
 	var cntnr = window.document.getElementById('main');
 
 	var page = findPageById(pageId);
@@ -120,8 +118,8 @@ function renderPage(pageId)
 //	selectedTag (String) Filter contents by tag (optional)
 // Returns:
 //	(nothing)
-function renderSiteMap(selectedTag)
-{
+function renderSiteMap(selectedTag) {
+	
 	var cntnr = window.document.getElementById('main');
 	document.title = site.name + ' :: All pages (site map)';
 	
@@ -135,8 +133,7 @@ function renderSiteMap(selectedTag)
 	cntntHTML += '<br/>';
 	var history = getSiteHistory(selectedTag);
 	cntntHTML += '<div class="cntnr-history"><h2>All contents by: History' + (selectedTag!=''?' (filtered)':'') + '</h2><ul>';
-	for(var i = 0; i<history.length; i++)
-	{
+	for(var i = 0; i<history.length; i++) {
 		cntntHTML += '<li>(' + formatDate(history[i].date) + ') <a href="index.html?' + history[i].pageid + '" class="page-title">' + history[i].title + '</a> ';
 		var pageTags = history[i].tags.split(';');
 		for(var j =0; j<pageTags.length; j++)
@@ -155,8 +152,8 @@ function renderSiteMap(selectedTag)
 //	showNoTag (boolean) True to show empty tags as "(no tag)"; false to hide
 // Returns:
 //	(String) HTML code to render a tag
-function renderTag(tag, selected, showNoTag)
-{
+function renderTag(tag, selected, showNoTag) {
+	
 	if(tag!='' || showNoTag)
 		return '<a href="index.html?~map-' + tag + '" class="tag' + (selected?' selected':'') + '">' + (tag!=''?tag:'(no tag)') + '</a>';
 	else 
@@ -170,8 +167,8 @@ function renderTag(tag, selected, showNoTag)
 //	pageId (String) The page id (field pageid in metadata.json > site > pages).
 // Return:
 //	(object) The "page" object.
-function findPageById(pageId)
-{
+function findPageById(pageId) {
+	
 	for(var i = 0; i<site.pages.length; i++)
 		if(site.pages[i].pageid==pageId)
 			return site.pages[i];
@@ -182,14 +179,12 @@ function findPageById(pageId)
 //	(none)
 // Returns:
 //	(String) The last page id (field pageid in metadata.json > site > pages).
-function findLastPage()
-{
+function findLastPage() {
+	
 	var lastDate = 0;
 	var lastPageId = null;
-	for(var i = 0; i<site.pages.length; i++)
-	{
-		if(site.pages[i].date>lastDate)
-		{
+	for(var i = 0; i<site.pages.length; i++) {
+		if(site.pages[i].date>lastDate) {
 			lastDate = site.pages[i].date;
 			lastPageId = site.pages[i].pageid; 
 		}
@@ -203,8 +198,8 @@ function findLastPage()
 // 	(none)
 // Returns:
 // 	(String) The last page id (field pageid in metadata.json > site > pages).
-function randomPage()
-{
+function randomPage() {
+	
 	return site.pages[Math.floor(Math.random() * site.pages.length)].pageid;
 }
 
@@ -213,15 +208,13 @@ function randomPage()
 // 	(none)
 // Returns:
 // 	(Array) A list of tags
-function getSiteTagList()
-{
+function getSiteTagList() {
+	
 	var tagList = new Array();
 	
-	for(var i = 0; i<site.pages.length; i++)
-	{
+	for(var i = 0; i<site.pages.length; i++) {
 		var pageTags = site.pages[i].tags.split(';');
-		for(var j = 0; j<pageTags.length; j++)
-		{
+		for(var j = 0; j<pageTags.length; j++) {
 			if(tagList.indexOf(pageTags[j])==-1)
 				tagList.push(pageTags[j]);
 		}
@@ -236,15 +229,14 @@ function getSiteTagList()
 //	n (int) Show only the top n tags 
 // Returns:
 //	(Array) A list of tags
-function getSiteTagListByContent(n)
-{
+function getSiteTagListByContent(n) {
+	
 	var topTags = new Array();
 	var tagCounters = new Array();
 	var tagList = getSiteTagList();
 	
 	// Counting pages by tag
-	for(var i = 0; i<tagList.length; i++)
-	{
+	for(var i = 0; i<tagList.length; i++) {
 		if(tagList[i]=='')
 			continue; // Only interested in non-empty tags
 		topTags.push(tagList[i]);
@@ -253,13 +245,10 @@ function getSiteTagListByContent(n)
 	
 	// Sorting by page count
 	var stillUnsorted = true;
-	while(stillUnsorted)
-	{
+	while(stillUnsorted) {
 		stillUnsorted = false;
-		for(var i = 0; i<topTags.length-1; i++)
-		{
-			if(tagCounters[i]<tagCounters[i+1])
-			{
+		for(var i = 0; i<topTags.length-1; i++) {
+			if(tagCounters[i]<tagCounters[i+1]) {
 				var tag = topTags[i+1];
 				var counter = tagCounters[i+1];
 				topTags[i+1] = topTags[i];
@@ -281,8 +270,8 @@ function getSiteTagListByContent(n)
 //	selectedTag (String) Show only pages related to a certain tag
 // Returns:
 //	(Array) An array of "page" elements (as defined in metadata.json > site)
-function getSiteHistory(selectedTag)
-{
+function getSiteHistory(selectedTag) {
+	
 	selectedTag = decodeURI(selectedTag);
 	var history = new Array();
 	
@@ -298,12 +287,11 @@ function getSiteHistory(selectedTag)
 	return history;
 }
 
-function lastUpdateYear()
-{
+function lastUpdateYear() {
+	
 	var currentYear = new Date().getFullYear();
 	var lastYear = 1972;
-	for(var i = 0; i<site.pages.length; i++)
-	{
+	for(var i = 0; i<site.pages.length; i++) {
 		if(site.pages[i].date.substring(0, 4)==currentYear)			
 			return currentYear;
 		else if(site.pages[i].date.substring(0, 4)>lastYear)
@@ -320,8 +308,8 @@ function lastUpdateYear()
 // 	date (String) The date in yyyymmddhhmi format
 // Returns:
 //	(String) The date formatted
-function formatDate(date)
-{
+function formatDate(date) {
+	
 	return date.substring(0, 4) + '-' +
 		   date.substring(4, 6) + '-' +
 		   date.substring(6, 8) + ' ' +
@@ -330,8 +318,8 @@ function formatDate(date)
 }
 
 /* ** Event handling ******************************************************** */
-function adjustContentHeight()
-{
+function adjustContentHeight() {
+	
 	var cntnr = window.document.getElementById('cntnr-html');
 	
 	// FIXME Avoid the 1.1; find why is that extra height needed
