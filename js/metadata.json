@@ -13,7 +13,7 @@ var site = {
 	"menu":
 	[
 		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"about", "exturl":null},
-		{"menuid":"menu_github", "text":"Powered by GitHub!", "title":"Powered by GitHub!", "pageid":null, "exturl":"http://github.com"}
+		{"menuid":"menu_github", "text":"Powered by GitHub!", "title":"Powered by GitHub!", "pageid":null, "exturl":"https://github.com/a-zz"}
 	],
 	"pages":
 	[
