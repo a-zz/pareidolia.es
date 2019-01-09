@@ -9,7 +9,7 @@ function start() {
 	renderHeader();
 	renderFooter();
 	navigate();
-	window.addEventListener('resize', adjustContentHeight);
+	addEventListeners();
 }
 
 // Add site metadata
@@ -318,6 +318,11 @@ function formatDate(date) {
 }
 
 /* ** Event handling ******************************************************** */
+function addEventListeners() {
+	
+	window.addEventListener('resize', adjustContentHeight);
+}
+
 function adjustContentHeight() {
 	
 	var cntnr = window.document.getElementById('cntnr-html');
