@@ -37,8 +37,15 @@ function navigate() {
 	
 	var url = window.location.href;
 	var pageId = null;
-	if(url.lastIndexOf('?')!=-1)
+	var anchor = null;
+	if(url.lastIndexOf('?')!=-1) {
 		pageId = url.substring(url.lastIndexOf('?')+1);
+		var hash = pageId.lastIndexOf('#');
+		if(hash!=-1) {
+			anchor = pageId.substring(hash+1);
+			pageId = pageId.substring(0, hash);
+		}
+	}
 	else
 		pageId = site.indexpage;
 	
@@ -49,7 +56,7 @@ function navigate() {
 	else if(pageId=='~random')		// --> Random page
 		renderPage(randomPage());
 	else							// --> Selected page
-		renderPage(pageId);
+		renderPage(pageId, anchor);
 }
 
 /* ** Content-rendering functions ******************************************* */
@@ -95,9 +102,10 @@ function renderFooter() {
 // Arguments:
 //	pageId (String) The page to load, referred by its id (field pageid in 
 //		metadata.json > site > pages).
+//	anchor (String) Local anchor (#something) within the page
 // Returns:
 //	(nothing)
-function renderPage(pageId) {
+function renderPage(pageId, anchor) {
 	
 	var cntnr = window.document.getElementById('main');
 
@@ -110,7 +118,32 @@ function renderPage(pageId) {
 	document.title = site.name + ' :: ' + page.title;
 	cntnr.innerHTML = '<div class="page-hdr">' + page.title + ' (' + formatDate(page.date) + ')' +
 					  (tagLinks!=''?' ' + tagLinks:'') + '</div>' +
-					  '<object type="text/html" data="content/html/' + page.content + '" class="cntnr-html" id="cntnr-html" onload="adjustContentHeight();"></object>';
+					  '<div class="cntnr-html" id="cntnr-html"></div>';
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) 
+			showContent(document.getElementById("cntnr-html"), this.responseText, anchor);
+	};
+	xhttp.open("GET", 'content/html/' + page.content, true);
+	xhttp.send();
+}
+
+// Writes the HTML content to target DIV
+// Arguments:
+//	target (HTMLDivElement) The DIV element to write the content to
+//	anchor (String) Local anchor (#something) within the content.
+//		Needed as local-link handling isn't clear, or seems to be not completely 
+//		coherent (unless on Firefox Developer Edition 65). They seem to work
+//		fine when first loaded, but not always on page reload. To avoid that we
+//		will be scrolling by javascript to the local anchor offset when needed.
+// Returns:
+//	(nothing)
+function showContent(target, content, anchor) {
+	
+	target.innerHTML = content;
+	if(anchor!=null) {
+		// TODO Find anchor offset within content and scroll
+	}
 }
 
 // Render the site map
@@ -319,15 +352,7 @@ function formatDate(date) {
 
 /* ** Event handling ******************************************************** */
 function addEventListeners() {
-	
-	window.addEventListener('resize', adjustContentHeight);
-}
 
-function adjustContentHeight() {
-	
-	var cntnr = window.document.getElementById('cntnr-html');
-	
-	// FIXME Avoid the 1.1; find why is that extra height needed
-	cntnr.style.height = (1.1 * cntnr.contentDocument.body.offsetHeight) + 'px';
+	// (currently none)
 }
 /* ************************************************************************** */
