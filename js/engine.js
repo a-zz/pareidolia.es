@@ -98,7 +98,9 @@ function renderFooter() {
 	ftr.innerHTML = '<a href="index.html">' + site.name + ' :: ' + site.description + '</a>, ' + lastUpdateYear();
 }
 
-// Render a content page
+// Render a content page. If the content has a Javascript function 
+//  startContentScript(), it'll be invoked just afterwards, so per-page
+//  content-specific scripts may be added.
 // Arguments:
 //	pageId (String) The page to load, referred by its id (field pageid in 
 //		metadata.json > site > pages).
@@ -121,8 +123,16 @@ function renderPage(pageId, anchor) {
 					  '<div class="cntnr-html" id="cntnr-html"></div>';
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) 
+		if (this.readyState == 4 && this.status == 200) {
 			showContent(document.getElementById("cntnr-html"), this.responseText, anchor);
+            window.document.getElementById('cntnr-html').querySelectorAll('script').forEach((contentScript) => {
+                var pageScript = document.createElement('script');
+                pageScript.appendChild(document.createTextNode(contentScript.text));
+                window.document.body.appendChild(pageScript);
+            });
+            if(typeof startContentScript === 'function')
+                startContentScript();
+        }
 	};
 	xhttp.open("GET", 'content/html/' + page.content, true);
 	xhttp.send();
