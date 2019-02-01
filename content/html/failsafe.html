@@ -1,0 +1,683 @@
+<meta charset="utf-8">
+<link rel="stylesheet" href="content/css/highlight/default.css" />
+<script>
+	function startContentScript() {
+	
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200) {
+				eval(this.responseText);
+				highlight();
+	        }
+		};
+		xhttp.open("GET", 'content/js/highlight/highlight.js', true);
+		xhttp.send();
+	}
+	
+	function highlight() {
+		
+        window.document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+	}
+</script>
+<span lang="en">
+	<h1>Writing fail-safe code</h1>
+
+	<p>
+		It takes maybe a few hundred thousand lines of code to realize that
+		the hardest part of programming isn't about what a program has to do
+		and do it efficiently. It's as important, and usually trickier, to
+		think and implement what to do when facing something unexpected. Shit
+		happens, and it can come from a lot of places to ruin your run time:
+		erratic user behaviour, badly formatted data, loosy network
+		connections, remote services going down, faulty disk blocks and memory
+		cells or even <a
+			href="https://www.independent.co.uk/news/science/subatomic-particles-cosmic-rays-computers-change-elections-planes-autopilot-a7584616.html">cosmic
+			rays hitting your motherboard</a>.
+	</p>
+
+	<p>In a robust enterprise program maybe half of the code is devoted
+		to error handling. It has to be there, and it's tough to anticipate
+		what can go wrong, and then implement countermeasures in a way that
+		doesn't make your code untidy or damage your run time performance.</p>
+
+	<p>I'm sure there're best-practice manuals or even academic papers
+		on the topic of fail-safe coding, but this article is simply about
+		what I personally do, in a practical rather than theoretical approach.
+		It may be useful for any programming language, although is very
+		strongly biased to Java because I know it well (or so I thnk).</p>
+
+	<p>The discussion below proceeds from the very elemental to higher
+		levels:</p>
+
+	<ol>
+		<li><a href="#section1">Checking input</a></li>
+		<li><a href="#section2">Logging</a></li>
+		<li><a href="#section3">Exceptions</a></li>
+		<li><a href="#section4">Transactions</a></li>
+		<li><a href="#section5">Conclussion: (my) best practice; and other
+				considerations</a></li>
+		<li><a href="#section6">Coda: assertions and unit testing</a></li>
+	</ol>
+	
+	<a id="section1" name="section1"></a>
+	<h2>1. Checking input</h2>
+
+	<p>
+		Plainly speaking: at the very beginning of every public function, it's
+		a must to check that your arguments conform with what the function
+		expects from them, with that commonly called <em>the function
+			contract</em>. In strongly-typed languages (e.g. Java), argument types
+		help a lot in enforcing conformity (i.e. an int won't ever hold a
+		string), but more advanced checks are often needed and out of the
+		scope of type checking. E.g. if the Javadoc for a function states that
+		a certain int argument must be positive, first thing to do when the
+		function is invoked is to check that it certainly is. Needless to say,
+		every public function must have decent Javadoc attached, as most of
+		the function contract is reflected there.
+	</p>
+
+	<p>Checks can be simple ones as the example before, or can go up to
+		check data against your bussiness rules and current running-state.
+		Non-conformant arguments should make the function to refuse to run and
+		exit with an Exception (see below); Java has a builtin
+		IllegalArgumentException for that. At least, null values should be
+		checked (and refused when appropriate) as errors due to them are
+		particularly hard to track.</p>
+
+	<p>Argument checking isn't only a must for stable code, it's also
+		needed for security reasons, specially in network-invokeable code, as
+		input manipulation is a common cracking technique.</p>
+
+	<p>
+		Anyway, I must confess I often ignore argument checking when
+		implementing internal-use-only code, to be run in a controlled
+		environment and not to be reused elsewhere. There're often <em>economic</em>
+		reasons for that, see the Conclussions section below for more.
+	</p>
+	
+	<a id="section2" name="section2"></a>
+	<h2>2. Logging</h2>
+
+	<p>
+		You always want to leave a log of what your program do behind the
+		scenes. Rich logging helps a good deal in <em>forensic</em> debugging
+		and gives a lot of hints for code optimization.
+	</p>
+
+	<p>The usual problem with logging is that sometimes can be too much
+		or too little. When a program is running fine usually little to no
+		logging is needed, and having abundant logging is a mess because it
+		hides the useful information, not to say it can damage storage
+		performance. But when a bug shows up you'll want as much logging as
+		possible.</p>
+
+	<p>
+		The de facto standard logging utility for Java, <a
+			href="https://en.wikipedia.org/wiki/Log4j">log4j</a>, is an
+		interesting solution to that. The basic idea is: log <em>everything</em>,
+		but tag each log message with a severity level, so you can decide at
+		run time how much you need. Although not recommended, run time
+		configuration can even be ignored, and log4j won't break or complaint,
+		it'll just send an early warning to stderr and be silent for the rest
+		of the run.
+	</p>
+
+	<p>The predefined severity levels in log4j version 2, from higher
+		to lower are: FATAL &gt; ERROR &gt; WARNING &gt; INFO &gt; DEBUG &gt;
+		TRACE. One may use them at will, but it's adviseable to do it in a
+		consistent way. The use for FATAL, ERROR and WARNING seems quite
+		straightforward; I often keep FATAL for circumstances that won't allow
+		the program to run altogether (e.g. the database is down).</p>
+
+	<p>The granularity for INFO, DEBUG and TRACE isn't as easy to
+		define and apply consistently. My working scheme is:
+	<ul>
+		<li><strong>INFO</strong> to log start and end of high-level,
+			general actions, specially when fired by user activity. This is often
+			intended for usage analysis and auditing; I will expand on this
+			later.</li>
+		<br />
+		<li><strong>DEBUG</strong> to log data that may be needed for,
+			well, debugging: identification of affected data sets, e.g.,
+			specially at high level functions.</li>
+		<br />
+		<li><strong>TRACE</strong> for fine-grained debugging info, like
+			processing steps, primary keys of involved rows, etc., specially at
+			lower level functions.</li>
+	</ul>
+	</p>
+
+	<p>Hands on, this isn't always so clear, sometimes you aren't so
+		certain when a message should be DEBUG or TRACE, and functions
+		designed to be invoked at a certain level may be called at a different
+		one. But, well, you can always learn how to refine your logging code
+		by inspecting your logs later.</p>
+
+	<p>As said before, a use for INFO is logging for auditing purposes.
+		This can be taken further by another interesting feature of log4j:
+		custom levels may be added to improve your logging or suit your needs,
+		whatever they are. I often add two custom level of my own:
+	<ul>
+		<li>WARN &gt; <strong>DPRTC</strong> &gt; INFO to log
+			data-protection related activities (e.g. access to personal data),
+			mostly for regulation compliance.
+		</li>
+		<br />
+		<li>DEBUG &gt; <strong>SQL</strong> &gt; TRACE to log database
+			related activities.
+		</li>
+	</ul>
+	</p>
+
+	<p>
+		As said before, the most important feature of log4j is that, no matter
+		how much you log at code, the effective logging level can be set at
+		run time based on your current needs. For instance, you can have your
+		application regularly logging at INFO (and above) level, but set it to
+		DEBUG or TRACE level when in need of troubleshooting; you can even
+		leave it at INFO and set to DEBUG or TRACE only those packages or
+		classes where the bug is likely to be, therefore having rich logging
+		only where you need it. log4j also allows you to decide what to do
+		with your logging: dumping it directly to the console, storing it in a
+		text file or database, sending it by email, etc. This can be set per
+		package/class <em>and</em> severity level, so you can have, e.g. INFOs
+		sent to a rotating text file, ERRORs notified by email, DPRTC and SQL
+		sent to specific files for auditing purposes, etc.
+	</p>
+
+	<p>A final word: by default log4j logs the source class along with
+		each log message, but help yourself writing good log messages that can
+		be quickly looked up within your code; "start execution" is a bad log
+		message, i.e. You can have log4j put down the line number the log
+		message was sent from, but it leads to a severe performance penalty at
+		run time, so it isn't recommended.</p> 
+		
+	<a id="section3" name="section3"></a>		
+	<h2>3. Exceptions</h2>
+
+	<p>The meat and potatoes of error handling, and maybe the most
+		easily misused.</p>
+
+	<p>Exceptions are meant for two things: i. keeping your working
+		code tidy by separating the error handling code; and ii. solving a
+		general problem within program execution: the function where an error
+		pops isn't usually the function that can deal with it.</p>
+
+	<p>Let's see. Traditional error handling (e.g. in Exception'less
+		languages such as C) is usually done via the functions return value.
+		For instance: a function that returns an int value may reserve -1 to
+		indicate and error within it:</p> <pre>
+		<code>
+int main(char* argc, char* argv) 
+{
+   	/ Do something before
+
+    // Call aFunction()
+    int result = aFunction();
+    if(result==-1) {
+        printlf("A error happened calling aFunction()!");
+        return 1;
+    }
+        
+    // Do something later
+}
+	</code>
+	</pre>
+
+	<p>You can even use different return values to show different
+		errors:</p> <pre>
+		<code>
+int main(char* argc, char* argv) 
+{
+    // Do something before
+
+    // Call aFunction()
+    int result = aFunction();
+    if(result==-1) {
+        printlf("Calling aFunction() returned error type A!");
+        return 1;
+    }
+    else if(result==-2) {
+        printlf("Calling aFunction() returned error type B!");
+        return 1;
+    }
+    else if(result&lt;-2) {
+        printlf("Calling aFunction() returned an unkonw error!");
+        return 1;
+    }
+        
+    // Do something later
+}
+	</code>
+	</pre>
+
+	<p>You see, a simple function as:</p> <pre>
+		<code>
+int main(char* argc, cha
+	r* argv) 
+{
+    // Do something before
+
+    // Call aFunction()
+    aFunction();
+        
+    // Do something later
+}
+	</code>
+	</pre>
+
+	<p>is seriously messed up with error handling code, therefore
+		damaging code legibility and perhaps run time performace.</p>
+
+	<p>But it may be (it usually is) even trickier: what if aFunction()
+		may actually return any int value, either positive or negative? You
+		may need to pass an argument by reference to get both your return code
+		and error status (either "int* result" or "int* errorCode"). Also:
+		what if you need to propagate the error status up in the function
+		stack? E.g.</p> <pre>
+		<code>
+int main(char* argc, char* argv) 
+{
+    // Do something before
+
+    // Call innerFunction()
+    int* errorCode;
+    int result = innerFunction(int* errorCode);
+    if(*errorCode==-1) {
+        printlf("A error happen calling innerFunction()!");
+        return 1;
+    }
+        
+    // Do something later
+}
+
+int innerFunction(int* errorCode) 
+{
+    int result;
+
+    // Do something before
+
+    // Call aFunction()
+    int* errorCode;
+    int aFunctionResult = innerFunction(int* errorCode);
+    if(*errorCode==-1)
+        return 0;
+        
+    // Do something later
+    return result;
+}
+	</code>
+	</pre>
+
+	<p>Every function in your code ends up being a mess of working code
+		and error handling code, and you have to complicate every function
+		prototype to include arguments for communicating error situations.</p>
+
+	<p>Exceptions solve this by stablishing a separate communication
+		channel to tell about errors. E.g. in Java:</p> <pre>
+		<code class>
+public static void main(String[] args) {
+
+    try {
+        // Working code goes here:
+        
+        // Do something before
+
+        // Call aFunction()
+        aFunction();
+        
+        // Do something later
+        
+        System.exit(0);
+    }
+    catch(Exception e) {
+        // And error handling code goes here:
+        System.out.println("An error happened: " + e.getMessage());
+        System.exit(1);
+    }
+}
+	</code>
+	</pre>
+
+	<p>Much tidier, isn't it? Furthermore, in object-oriented languages
+		exceptions are fully-functional objects, so they can convey any
+		information you may need about the error. Even furthermore, different
+		exceptions can be thrown for different error situations, but they
+		always inherit (by class extension) from the base Exception class, so
+		you can set specific error handlers for specific errors and a general
+		handler to deal with anything else:</p> <pre>
+		<code>
+public static void main(String[] args) {
+
+    try {        
+        // Do something before
+
+        // Call aFunction()
+        aFunction();
+        
+        // Do something later
+        
+        System.exit(0);
+    }
+    catch(MyException e) {
+        // Custom exception caught
+        System.out.println("An error happened: " + e.getMyErrorDescription());
+        // You may even have a custom e.getMyErrorCode() that could allow for the mitigation of
+        //  certain error situations...
+        System.exit(1);
+    }
+    catch(SQLException e) {
+        // Database error caught
+        System.out.println("A database error happened: " + e.getMessage());
+        System.exit(2)
+    }    
+    catch(Exception e) {
+        // Any other situation
+        System.out.println("An unkonwn error happened: " + e.getMessage());
+        System.exit(3);
+    }
+}
+	</code>
+	</pre>
+
+	<p>So far so good, but there's more. As said before, there're
+		situations in which you need to propagate errors up the function
+		calling stack. This is no rare, but truly the ordinary, and it's
+		related to something that was anticipated and the beginning of this
+		section: the function where an error pops isn't usually the function
+		that can deal with it. For instance: in your online shop there's a
+		function for cart checkout; this function will call another one that
+		creates and order; this will call another one to check for stock; this
+		will call another one to send the appropriate query to the database;
+		this will call another one to set a connection to the database; etc.;
+		etc.; etc;... and in the low end there'll be a function that opens the
+		raw TCP connection to the database server. Maybe that function will
+		fail (perhaps the server is down, or the network is unreachable) and
+		the whole operation will fail. So, you have an error at the very low
+		end of your function stack, but the function that really needs to deal
+		with it is the one at the very top: the function that got the user
+		click and must report the bad news: "sorry guy, your order couldn't be
+		processed", maybe after a few retries.</p>
+
+	<p>Exceptions are specifically designed for this. The basic idea
+		is: an exception within a function will propagate upwards unless
+		explicitly caught. E.g. aFunction() declares that it may throw
+		exceptions: ExceptionA and ExceptionB. Therefore, when we call
+		aFunction(), we need to catch both exceptions or declare them as
+		throwable. I.e.:</p> <pre>
+		<code>
+public void aFunction() throws ExceptionA, ExceptionB {
+
+    // Do whatever here
+}
+
+public void anotherFunction throws ExceptionB {
+
+    try {
+        aFunction();
+    }
+    catch(ExceptionA e) {
+        // Deal with error situation A
+    }
+}
+	</code>
+	</pre>
+
+	<p>ExceptionB isn't caught within the function body, so it can
+		propagate upstream and thus needs to be declared at the function
+		prototype; otherwise, the class just won't compile. It's a nice and
+		elegant way of anticipating at build time things that could go wrong
+		at run time, and making the compiler enfoce proper handling of them.</p>
+
+	<p>So, to sum up, it's as simple as this: in every function attach
+		a specific exception for any error situation that could show up; in
+		upper functions, catch the exceptions that can be dealt with and leave
+		the rest of them to propagate upstream; eventually, a higher function
+		will be able to solve them, at least to show a kind "sorry guy"
+		message (or risk an alarming stack trace dump). Taken seriously, a
+		good exception architecture makes programs very resilient. It's not
+		easy, though (error handling never is), and it's very closely related to
+		the program bussiness rules, so it's hard to give a general howto: it
+		needs to be very thoroughly designed and tested per case.</p>
+
+	<p>A final word: lower exceptions may be caught, packed together
+		and rethrown as custom exceptions. E.g.:</p> <pre>
+		<code>
+public void anotherFunction() throws MyException {
+
+    try {
+    	// Do whatever here
+    }
+    catch(ExceptionA e) {
+        throw new MyException("Error A happened!");
+    }
+    catch(ExceptionB e) {
+        throw new MyException("Error B happened!");
+    }    
+}
+	</code>
+	</pre>
+
+	<p>This is sometimes useful, but can be easily overused, with the
+		result of losing fine-grain information and gaining nothing. Apply 
+		common sense.</p>
+
+	<p>For completion, I must talk about the finally block at the end
+		of a try-catch construction. The finally block will always be run
+		before the function returns, no matter whether the execution runs
+		cleanly through the try block or jumps to the catch block because on
+		an exception. This is very useful for wrapping up whatever you need
+		before returning. More on this just below.</p> 
+		
+	<a id="section4" name="section4"></a>		
+	<h2>4. Transactions</h2>
+
+	<p>Transactions are usually thought of within the scope of SQL
+		operations, but in real world they are more widely needed as data will
+		often not only reside in databases. E.g. applications producing files
+		programatically (document management systems) will usually need to
+		delete files generated within a failed task, otherwise they may be
+		picked up by a later operation and produce inconstent results (or
+		worst: data leaks). Also, distributed systems inducting state changes
+		in remote servers (via web services, for instance) must undo them in
+		the case of an error to avoid a distributed mess. So don't only think
+		about SQL transaction rollbacks, have your whole set of bussiness
+		rules and storage system in mind.</p>
+
+	<p>Transaction rollbacks have their natural place within catch
+		blocks. In a transaction, an emerging exception should be examined,
+		solved if appropriate or lead to a transaction rollback. In order to
+		have your code tidy, the rollback (or, hopefully, the commit) should
+		be done at the same function opening the transaction, thus functions
+		implementing sub-operations within the transaction should signal with
+		a proper exception whether the transaction should be rollback'ed;
+		maybe a catch-all handler, catch(Exception e), for unanticipated
+		errors should rollback the transaction too, just in case. This
+		guarantees data integrity, but that isn't usually enough, probably
+		there're furhter operations to be done to close the error situation
+		(again, at least the "sorry guy" message), so the exception will
+		usually need to be rethrown (as is or as a custom exception) after the
+		rollback.</p>
+
+	<p>Don't just catch-and forget: exceptions can also pop within
+		catch and finally blocks; if you ignore them within a mitigation
+		process your data will very like end in an inconsistent state.</p>
+
+	<p>Don't forget to close the transaction after you're done. The
+		finally block is the most logical place for it to be. Before closing a
+		transaction in the finally block, it's always a good idea to do an
+		inconditional rollback; this way you have an "emergency" rollback in
+		case your controlled, "explicit" rollback within the catch block
+		couldn't be reached because of a second exception. You may need to
+		close related resources as well, such as ResultSet's or file handlers.
+		</p>
+
+	<p>To sum up everything:
+	<pre>
+		<code>
+public void makeItHappen() throws Exception {
+
+    Transaction t = null;
+    try {
+        t = new Transaction();
+        
+        // Do whatever you need
+        step1(t);
+        step2(t);
+        
+        // If we reach this point, everything's fine
+        t.commit();
+    }
+    catch(Exception e) {
+        // Mitigation code here or...
+        t.rollback();
+        throw e; // Rethrown to notify error upstream
+    }
+    finally {
+        t.rollback(); // Just in case the rollback above couldn't be reached because of 2nd exception
+        t.close();
+        // Any other wrap up code here
+    }
+}
+	</code>
+	</pre>
+
+	<p>Your code for commiting, rollback'ing and closing transactions
+		should be specially robust, logging-rich and fail-safe. You need to be
+		really sure about the result of a transaction.</p>
+
+	<p>Needles to say, and out of the scope of this discussion, a good
+		data model helps a lot in building fail-safe code. When you take
+		strict argument typing to your database model, add proper foreign keys
+		and other constraints you're eliminating a huge source of
+		bad-formatted input to your code.</p>
+		
+	<a id="section5" name="section5"></a>		
+	<h2>5. Conclussion: (my) best practice; and other considerations</h2>
+
+	<p>All right, so you have a set of things to be done for proper
+		error handling, and it isn't always clear how to put them all
+		together. Even when you've made your mind and have a good working
+		scheme, you're easily taken away by ferocious code typing and often
+		end up making poor error-handling code. Stop often and review what
+		you're doing.
+	<p>And what I do is (or should be):
+	<ol>
+		<li>Write decent to excellent Javadoc just after planting a
+			public function protoype and <em>before</em> you write the function
+			body. Not only because you can forget to do so once your function is
+			working; also because it gives you the chance to stop coding and
+			think at ease how your function must work, which arguments you'll
+			need and what should be allowed for their values.<br /> <br />
+			Javadoc is recommended for private functions too, but mostly as an
+			self-explanation of why that function is needed (it may come handy
+			when you read your code later).
+		</li>
+		<br />
+		<li>Write argument checking code at the very beginng of the
+			function. Throw IllegalArgumentException's when appropriate. Use
+			common sense to determine how deep your tests need to be.</li>
+		<br />
+		<li>Throw exceptions as specific as possible when you detect an
+			error within your bussiness rules. Sometimes builtin Java exceptions
+			will be fine, but you'll usually want to code your own exceptions in
+			order to describe precisely your error situation and convey
+			application-specific data.</li>
+		<br />
+		<li>Unless you have a good reason for exception rethrowing, don't
+			try-catch in your function unless you can deal with the exceptions
+			you catch. Exceptions you can't solve should just be propagated up in
+			the function stack. But...</li>
+		<br />
+		<li>If you open a transaction in your function, you must provide
+			a try-catch-finally block in order to rollback and finally close it.
+			You probably can't completely solve the error situation there, but
+			you need to catch the exception to rollback the transaction. The
+			exception should be rethrown afterwards for further error processing,
+			if needed.</li>
+		<br />
+		<li>About logging: as said before, with log4j you can't never log
+			too much, so be generous.<br /> <br /> The interaction between
+			logging and exception handling doesn't always behave as intended, or
+			as it needed to be completely useful. When a trouble shows up within
+			a try block, execution jumps to the catch block and you don't always
+			know where it came from. null values are specially difficult to track
+			(a good reason to have argument checks above). I've come to know by
+			experience that the best approach is: <br /> <br />
+			<ol>
+				<li>In multi-user systems, add user (or session) identification
+					to every log message. This adds some complexity to the
+					otherwise-straightforward log4j, but it paids off. In enterprise
+					systems it may also be needed for auditing. Affected data sets
+					should be also properly identified.</li>
+				<br />
+				<li>INFO-log at the start and end of high-level operations.
+					E.g. "Starting shopping cart #255 checkout for user johndoe".</li>
+				<br />
+				<li>Within try blocks, DEBUG-log or TRACE-log progress in fine
+					steps. Thus, when an exception pops, the log can give a good hint
+					of what code section it came from. Slicing your code in short and
+					simple functions helps a lot too.</li>
+				<br />
+				<li>Don't ERROR-log when you throw an exception. Add a good
+					error message to the exception itself. e.g.: "Shopping cart #255
+					checkout for user johndoe: no stock for item #5" and...</li>
+				<br />
+				<li>ERROR-log when you catch the exception upstream. Of course,
+					any mitigating action should be finely log-DEBUG'ged or TRACE'd
+					too.</li>
+			</ol>
+		</li>
+	</ol>
+	</p>
+
+	<p>
+		A final word. A key concept in engineering is that zero risk have
+		infinite cost. Plainly speaking: fail-safe code is expensive and won't
+		always anticipate everything that could go wrong, so apply an economic
+		sense to it: balance cost and benefits of error-handling. Sometimes
+		even the "do nothing" approach may be fine. But don't relax too much;
+		as Einstein famously said: <em>Do it as simple as possible; but
+			not more simple</em>.
+	</p>
+
+	<a id="section6" name="section6"></a>
+	<h2>6. Coda: assertions and unit testing</h2>
+
+	<p>Although the discussion above may be enough for enterprise
+		systems, fail-safe coding may be taken further for mission-critical
+		applications. I don't know too much about that, so I'm just quoting
+		some ideas I've been picking from time to time.</p>
+
+	<p>
+		C/C++, Java and any (?) serious programming language support <em>assertions</em>.
+		Simply put, they're special statements within your code in order to
+		check that what really, really, really can't never ever fail, actually
+		doesn't. Computers are deterministic machines by design, but there're
+		always some sources of random behaviour within them. I've talked about
+		hardware faults before, either internal o inducted by external
+		phenomenons. But there're others, such as very-low-end code undergoing
+		subtle behavioral changes due to processor or OS portability. You may
+		face unexpected problems when a word becomes 64-bit, e.g.
+	</p>
+
+	<p>
+		Assertions can be complemented with <em>Unit Testing</em>, and in fact 
+		have a big role in it. That's a software developing method by which 
+		every piece of code is associated with a corresponding piece of test 
+		code, being both developed simulatenously. That test code is (or can be) 
+		usually run along with the building proccess and, if well made, tests 
+		that every module or function of the working code behaves as expected, 
+		for selected usage cases, on the platform the application is built for.
+	</p>
+
+	<p>
+		Not much more to say about this. Interesting as it is, I have no
+		experience worth to anybody. I can only recommend looking at the
+		NASA/JPL code guidelines if you want yo know how far fail-safe code
+		can be taken when needed: <a
+			href="https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code">https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code</a>. Enjoy!
+	</p>
+</span>
