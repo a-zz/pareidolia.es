@@ -5,5 +5,8 @@
 /* Content styles must be prefixed with the container DIV id, e.g.:           */
 #cntnr-html a 
 	{ color: green; text-shadow: 2px 2px 2px gray; }
+
+#cntnr-html h2
+	{ margin-top: 80px; }
 	 
 /* ************************************************************************** */
