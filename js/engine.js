@@ -123,7 +123,7 @@ function renderPage(pageId, anchor) {
 					  '<div class="cntnr-html" id="cntnr-html"></div>';
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
+		if(this.readyState == 4 && this.status == 200) {
 			showContent(document.getElementById("cntnr-html"), this.responseText, anchor);
             window.document.getElementById('cntnr-html').querySelectorAll('script').forEach((contentScript) => {
                 var pageScript = document.createElement('script');
