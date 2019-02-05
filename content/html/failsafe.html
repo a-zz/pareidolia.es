@@ -56,12 +56,10 @@
 		<li><a href="#section2">Logging</a></li>
 		<li><a href="#section3">Exceptions</a></li>
 		<li><a href="#section4">Transactions</a></li>
-		<li><a href="#section5">Conclussion: (my) best practice; and other
-				considerations</a></li>
+		<li><a href="#section5">Conclussion: (my) best practice; and
+				other considerations</a></li>
 		<li><a href="#section6">Coda: assertions and unit testing</a></li>
-	</ol>
-	
-	<a id="section1" name="section1"></a>
+	</ol> <a id="section1" name="section1"></a>
 	<h2>1. Checking input</h2>
 
 	<p>
@@ -95,9 +93,7 @@
 		implementing internal-use-only code, to be run in a controlled
 		environment and not to be reused elsewhere. There're often <em>economic</em>
 		reasons for that, see the Conclussions section below for more.
-	</p>
-	
-	<a id="section2" name="section2"></a>
+	</p> <a id="section2" name="section2"></a>
 	<h2>2. Logging</h2>
 
 	<p>
@@ -125,11 +121,11 @@
 	</p>
 
 	<p>The predefined severity levels in log4j version 2, from higher
-		to lower are: FATAL &gt; ERROR &gt; WARNING &gt; INFO &gt; DEBUG &gt;
+		to lower are: FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt;
 		TRACE. One may use them at will, but it's adviseable to do it in a
-		consistent way. The use for FATAL, ERROR and WARNING seems quite
-		straightforward; I often keep FATAL for circumstances that won't allow
-		the program to run altogether (e.g. the database is down).</p>
+		consistent way. The use for FATAL, ERROR and WARN seems quite
+		straightforward. Hint: I often keep FATAL for circumstances that won't
+		allow the program to run altogether (e.g. the database is down).</p>
 
 	<p>The granularity for INFO, DEBUG and TRACE isn't as easy to
 		define and apply consistently. My working scheme is:
@@ -139,8 +135,8 @@
 			intended for usage analysis and auditing; I will expand on this
 			later.</li>
 		<br />
-		<li><strong>DEBUG</strong> to log data that may be needed for,
-			well, debugging: identification of affected data sets, e.g.,
+		<li><strong>DEBUG</strong> to log data that may be needed for
+			-well- debugging: identification of affected data sets, e.g.,
 			specially at high level functions.</li>
 		<br />
 		<li><strong>TRACE</strong> for fine-grained debugging info, like
@@ -192,9 +188,7 @@
 		be quickly looked up within your code; "start execution" is a bad log
 		message, i.e. You can have log4j put down the line number the log
 		message was sent from, but it leads to a severe performance penalty at
-		run time, so it isn't recommended.</p> 
-		
-	<a id="section3" name="section3"></a>		
+		run time, so it isn't recommended.</p> <a id="section3" name="section3"></a>
 	<h2>3. Exceptions</h2>
 
 	<p>The meat and potatoes of error handling, and maybe the most
@@ -206,7 +200,7 @@
 		pops isn't usually the function that can deal with it.</p>
 
 	<p>Let's see. Traditional error handling (e.g. in Exception'less
-		languages such as C) is usually done via the functions return value.
+		languages such as C) is usually done via the function return value.
 		For instance: a function that returns an int value may reserve -1 to
 		indicate and error within it:</p> <pre>
 		<code>
@@ -225,6 +219,12 @@ int main(char* argc, char* argv)
 }
 	</code>
 	</pre>
+
+	<p>
+		(Take this example and those below as pseudo-code, don't blame if they
+		don't compile! Code highlighting kindly provided by <a
+			href="https://highlightjs.org/">highlight.js</a>.)
+	</p>
 
 	<p>You can even use different return values to show different
 		errors:</p> <pre>
@@ -343,11 +343,12 @@ public static void main(String[] args) {
 
 	<p>Much tidier, isn't it? Furthermore, in object-oriented languages
 		exceptions are fully-functional objects, so they can convey any
-		information you may need about the error. Even furthermore, different
-		exceptions can be thrown for different error situations, but they
-		always inherit (by class extension) from the base Exception class, so
-		you can set specific error handlers for specific errors and a general
-		handler to deal with anything else:</p> <pre>
+		information you may need about the error and have builtin logic to
+		deal with it. Even furthermore, different exceptions can be thrown for
+		different error situations, but they always inherit (by class
+		extension) from the base Exception class, so you can set specific
+		error handlers for specific errors and a general handler to deal with
+		anything else:</p> <pre>
 		<code>
 public static void main(String[] args) {
 
@@ -429,18 +430,21 @@ public void anotherFunction throws ExceptionB {
 		propagate upstream and thus needs to be declared at the function
 		prototype; otherwise, the class just won't compile. It's a nice and
 		elegant way of anticipating at build time things that could go wrong
-		at run time, and making the compiler enfoce proper handling of them.</p>
+		at run time, and making the compiler enfoce proper handling of them.
+		Generally speaking, designing your API in a way that run time errors
+		are modelled as compile time errors and hence detected by the compiler
+		is always a good idea, by the way.</p>
 
-	<p>So, to sum up, it's as simple as this: in every function attach
-		a specific exception for any error situation that could show up; in
+	<p>So, to sum up, it's as simple as this: in every function throw a
+		specific exception for any error situation that could show up; in
 		upper functions, catch the exceptions that can be dealt with and leave
 		the rest of them to propagate upstream; eventually, a higher function
 		will be able to solve them, at least to show a kind "sorry guy"
 		message (or risk an alarming stack trace dump). Taken seriously, a
 		good exception architecture makes programs very resilient. It's not
-		easy, though (error handling never is), and it's very closely related to
-		the program bussiness rules, so it's hard to give a general howto: it
-		needs to be very thoroughly designed and tested per case.</p>
+		easy, though (error handling never is), and it's very closely related
+		to the program bussiness rules, so it's hard to give a general howto:
+		it needs to be very thoroughly designed and tested per case.</p>
 
 	<p>A final word: lower exceptions may be caught, packed together
 		and rethrown as custom exceptions. E.g.:</p> <pre>
@@ -460,18 +464,33 @@ public void anotherFunction() throws MyException {
 	</code>
 	</pre>
 
-	<p>This is sometimes useful, but can be easily overused, with the
-		result of losing fine-grain information and gaining nothing. Apply 
+	<p>This is sometimes practical, but can be easily overused, with the
+		result of losing fine-grain information and gaining nothing. Apply
 		common sense.</p>
 
 	<p>For completion, I must talk about the finally block at the end
 		of a try-catch construction. The finally block will always be run
-		before the function returns, no matter whether the execution runs
-		cleanly through the try block or jumps to the catch block because on
-		an exception. This is very useful for wrapping up whatever you need
-		before returning. More on this just below.</p> 
-		
-	<a id="section4" name="section4"></a>		
+		before the execution leaves the try-catch-finally construction, no matter 
+		whether its runs cleanly through the try block or jumps to the catch 
+		block because on an exception.</p> <pre>
+		<code>
+public void aFunction() throws MyException {
+
+    try {
+    	// Do whatever here
+    }
+    catch(Exception e) {
+        // Execution will jump here in case an exception pops, but..
+    }
+    finally {
+        // ... execution will always pass through here after try or catch
+    }    
+}
+	</code>
+	</pre>
+
+	<p>This is very useful for wrapping up whatever you need before
+		returning. More on this just below.</p> <a id="section4" name="section4"></a>
 	<h2>4. Transactions</h2>
 
 	<p>Transactions are usually thought of within the scope of SQL
@@ -512,7 +531,7 @@ public void anotherFunction() throws MyException {
 		case your controlled, "explicit" rollback within the catch block
 		couldn't be reached because of a second exception. You may need to
 		close related resources as well, such as ResultSet's or file handlers.
-		</p>
+	</p>
 
 	<p>To sum up everything:
 	<pre>
@@ -552,9 +571,7 @@ public void makeItHappen() throws Exception {
 		data model helps a lot in building fail-safe code. When you take
 		strict argument typing to your database model, add proper foreign keys
 		and other constraints you're eliminating a huge source of
-		bad-formatted input to your code.</p>
-		
-	<a id="section5" name="section5"></a>		
+		bad-formatted input to your code.</p> <a id="section5" name="section5"></a>
 	<h2>5. Conclussion: (my) best practice; and other considerations</h2>
 
 	<p>All right, so you have a set of things to be done for proper
@@ -619,7 +636,8 @@ public void makeItHappen() throws Exception {
 				<li>Within try blocks, DEBUG-log or TRACE-log progress in fine
 					steps. Thus, when an exception pops, the log can give a good hint
 					of what code section it came from. Slicing your code in short and
-					simple functions helps a lot too.</li>
+					simple try-catch-finally blocks and short and simple functions
+					helps a lot too.</li>
 				<br />
 				<li>Don't ERROR-log when you throw an exception. Add a good
 					error message to the exception itself. e.g.: "Shopping cart #255
@@ -641,9 +659,7 @@ public void makeItHappen() throws Exception {
 		even the "do nothing" approach may be fine. But don't relax too much;
 		as Einstein famously said: <em>Do it as simple as possible; but
 			not more simple</em>.
-	</p>
-
-	<a id="section6" name="section6"></a>
+	</p> <a id="section6" name="section6"></a>
 	<h2>6. Coda: assertions and unit testing</h2>
 
 	<p>Although the discussion above may be enough for enterprise
@@ -656,7 +672,7 @@ public void makeItHappen() throws Exception {
 		Simply put, they're special statements within your code in order to
 		check that what really, really, really can't never ever fail, actually
 		doesn't. Computers are deterministic machines by design, but there're
-		always some sources of random behaviour within them. I've talked about
+		always some sources of randomness in their operation. I've talked about
 		hardware faults before, either internal o inducted by external
 		phenomenons. But there're others, such as very-low-end code undergoing
 		subtle behavioral changes due to processor or OS portability. You may
@@ -664,13 +680,14 @@ public void makeItHappen() throws Exception {
 	</p>
 
 	<p>
-		Assertions can be complemented with <em>Unit Testing</em>, and in fact 
-		have a big role in it. That's a software developing method by which 
-		every piece of code is associated with a corresponding piece of test 
-		code, being both developed simulatenously. That test code is (or can be) 
-		usually run along with the building proccess and, if well made, tests 
-		that every module or function of the working code behaves as expected, 
-		for selected usage cases, on the platform the application is built for.
+		Assertions can be complemented with <em>Unit Testing</em>, and in fact
+		have a big role in it. That's a software developing method by which
+		every piece of code is associated with a corresponding piece of test
+		code, being both developed simulatenously. That test code is (or can
+		be) usually run along with the building proccess and, if well made,
+		tests that every module or function of the working code behaves as
+		expected, for selected usage cases, on the platform the application is
+		built for.
 	</p>
 
 	<p>
@@ -678,6 +695,7 @@ public void makeItHappen() throws Exception {
 		experience worth to anybody. I can only recommend looking at the
 		NASA/JPL code guidelines if you want yo know how far fail-safe code
 		can be taken when needed: <a
-			href="https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code">https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code</a>. Enjoy!
+			href="https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code">https://en.wikipedia.org/wiki/The_Power_of_10:_Rules_for_Developing_Safety-Critical_Code</a>.
+		Enjoy!
 	</p>
 </span>
