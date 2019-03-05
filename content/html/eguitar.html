@@ -1,0 +1,1609 @@
+<meta charset="utf-8">
+<style>
+div.chart {
+	width: 50%;
+	height: auto;
+	margin: auto;
+}
+</style>
+<script>
+	function startContentScript() {
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				eval(this.responseText);
+				drawCharts();
+			}
+		};
+		xhttp.open("GET", 'content/js/chart.js/chart.min.js', true);
+		xhttp.send();
+	}
+
+	function drawCharts() {
+
+		var ctx;
+		ctx = document.getElementById('chart-adsr-natural').getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ '', '', '', '', '', '', '', '', '', '', '', '', '',
+						'', '', '', '', '', '' ],
+				datasets : [ {
+					label : 'volume',
+					fill : false,
+					borderColor : 'lightgreen',
+					data : [ 0.00, 0.50, 1, 0.70, 0.45, 0.30, 0.22, 0.15, 0.11,
+							0.08, 0.06, 0.05, 0.045, 0.04, 0.035, 0.030, 0.025,
+							0.020, 0.015 ],
+					lineTension : 0
+				} ]
+			},
+			options : {
+				title : {
+					text : 'Guitar string dynamics, idealized',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ],
+					xAxes : [ {
+						gridLines : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-harmonics-natural-1st')
+				.getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ 'neck saddle', '.', '.', '.', '.', '.', '.', '.',
+						'.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+						'bridge saddle' ],
+				datasets : [ {
+					label : '1st mode',
+					fill : false,
+					borderColor : 'lightgreen',
+					data : [ 0.00, 0.17, 0.34, 0.50, 0.64, 0.77, 0.87, 0.94,
+							0.98, 1.00, 0.98, 0.94, 0.87, 0.77, 0.64, 0.50,
+							0.34, 0.17, 0.00 ]
+				} ]
+			},
+			options : {
+				title : {
+					text : 'One string vibrating',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ],
+					xAxes : [ {
+						gridLines : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-harmonics-natural-2nd')
+				.getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ 'neck saddle', '.', '.', '.', '.', '.', '.', '.',
+						'.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+						'bridge saddle' ],
+				datasets : [ {
+					label : '2nd mode (1/2 string)',
+					fill : false,
+					borderColor : 'rgb(110, 200, 110)',
+					data : [ 0.00, 0.17, 0.32, 0.44, 0.49, 0.49, 0.44, 0.32,
+							0.17, 0.00, -0.17, -0.32, -0.44, -0.49, -0.49,
+							-0.44, -0.32, -0.17, 0.00 ]
+				} ]
+			},
+			options : {
+				title : {
+					text : 'One string vibrating',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ],
+					xAxes : [ {
+						gridLines : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-harmonics-natural-3rd')
+				.getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ 'neck saddle', '.', '.', '.', '.', '.', '.', '.',
+						'.', '.', '.', '.', '.', '.', '.', '.', '.', '.',
+						'bridge saddle' ],
+				datasets : [ {
+					label : '3rd mode (1/3 string)',
+					fill : false,
+					borderColor : 'rgb(130, 220, 130)',
+					data : [ 0.00, 0.17, 0.29, 0.33, 0.29, 0.17, 0.00, -0.17,
+							-0.29, -0.33, -0.29, -0.17, 0.00, 0.17, 0.29, 0.33,
+							0.29, 0.17, 0.00 ]
+				} ]
+			},
+			options : {
+				title : {
+					text : 'One string vibrating',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ],
+					xAxes : [ {
+						gridLines : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-harmonics-natural-4th')
+				.getContext('2d');
+		new Chart(ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ 'neck saddle', '.', '.', '.', '.', '.', '.',
+								'.', '.', '.', '.', '.', '.', '.', '.', '.',
+								'.', '.', 'bridge saddle' ],
+						datasets : [
+								{
+									label : '4th mode (1/4 string)',
+									fill : false,
+									borderColor : 'rgb(150, 240, 150)',
+									data : [ 0.00, 0.16, 0.25, 0.22, 0.09,
+											-0.09, -0.22, -0.25, -0.16, 0.00,
+											0.16, 0.25, 0.22, 0.09, -0.09,
+											-0.22, -0.25, -0.16, 0.00 ]
+								},
+								{
+									label : '5th mode (1/5 string)',
+									fill : false,
+									borderColor : 'rgb(170, 250, 170)',
+									data : [ 0.00, 0.15, 0.20, 0.10, -0.07,
+											-0.19, -0.17, -0.03, 0.13, 0.20,
+											0.13, -0.03, -0.17, -0.19, -0.07,
+											0.10, 0.20, 0.15, 0.00 ]
+								},
+								{
+									label : '6th mode (1/6 string)',
+									fill : false,
+									borderColor : 'rgb(190, 255, 190)',
+									data : [ 0.00, 0.14, 0.14, 0.00, -0.14,
+											-0.14, 0.00, 0.14, 0.14, 0.00,
+											-0.14, -0.14, 0.00, 0.14, 0.14,
+											0.00, -0.14, -0.14, 0.00 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'One string vibrating',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-harmonics-natural').getContext(
+				'2d');
+		new Chart(ctx,
+				{
+					type : 'bar',
+					data : {
+						labels : [ '1st (fund.)', '2nd', '3rd', '4th', '5th',
+								'6th', '7th', '8th', '9th', '10th', '11th',
+								'12th', 'etc...' ],
+						datasets : [ {
+							label : 'Harmonics',
+							backgroundColor : 'lightgreen',
+							borderColor : 'gray',
+							data : [ 12, 6, 4, 3, 2.4, 2, 1.71, 1.5, 1.33, 1.2,
+									1.09, 1 ],
+						} ]
+					},
+					options : {
+						title : {
+							text : 'Harmonics, idealized',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-2strings').getContext('2d');
+		new Chart(ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '' ],
+						datasets : [
+								{
+									label : 'bass string',
+									fill : false,
+									borderColor : 'rgb(190, 220, 190)',
+									data : [ 0.00, 0.17, 0.34, 0.50, 0.64,
+											0.77, 0.87, 0.94, 0.98, 1.00, 0.98,
+											0.94, 0.87, 0.77, 0.64, 0.50, 0.34,
+											0.17, 0.00, -0.17, -0.34, -0.50,
+											-0.64, -0.77, -0.87, -0.94, -0.98,
+											-1.00, -0.98, -0.94, -0.87, -0.77,
+											-0.64, -0.50, -0.34, -0.17, 0.00,
+											0.17, 0.34, 0.50, 0.64, 0.77, 0.87,
+											0.94, 0.98, 1.00, 0.98, 0.94, 0.87,
+											0.77, 0.64, 0.50, 0.34, 0.17, 0.00,
+											-0.17, -0.34, -0.50, -0.64, -0.77,
+											-0.87, -0.94, -0.98, -1.00, -0.98,
+											-0.94, -0.87, -0.77, -0.64, -0.50,
+											-0.34, -0.17, 0.00 ]
+								},
+								{
+									label : 'treble string',
+									fill : false,
+									borderColor : 'rgb(220, 250, 220)',
+									data : [ 0.00, 0.27, 0.31, 0.09, -0.21,
+											-0.33, -0.17, 0.14, 0.33, 0.24,
+											-0.06, -0.30, -0.29, -0.03, 0.26,
+											0.32, 0.11, -0.19, -0.33, -0.19,
+											0.11, 0.32, 0.26, -0.03, -0.29,
+											-0.30, -0.06, 0.24, 0.33, 0.14,
+											-0.17, -0.33, -0.21, 0.09, 0.31,
+											0.27, 0.00, -0.27, -0.31, -0.09,
+											0.21, 0.33, 0.17, -0.14, -0.33,
+											-0.24, 0.06, 0.30, 0.29, 0.03,
+											-0.26, -0.32, -0.11, 0.19, 0.33,
+											0.19, -0.11, -0.32, -0.26, 0.03,
+											0.29, 0.30, 0.06, -0.24, -0.33,
+											-0.14, 0.17, 0.33, 0.21, -0.09,
+											-0.31, -0.27, 0.00 ]
+								},
+								{
+									label : 'added wave',
+									fill : false,
+									borderColor : 'rgb(100, 180, 100)',
+									data : [ 0.00, 0.45, 0.66, 0.59, 0.43,
+											0.43, 0.70, 1.08, 1.31, 1.24, 0.93,
+											0.64, 0.58, 0.74, 0.90, 0.82, 0.46,
+											-0.02, -0.33, -0.36, -0.23, -0.18,
+											-0.39, -0.80, -1.15, -1.24, -1.04,
+											-0.76, -0.66, -0.80, -1.03, -1.10,
+											-0.86, -0.41, -0.03, 0.10, 0.00,
+											-0.10, 0.03, 0.41, 0.86, 1.10,
+											1.03, 0.80, 0.66, 0.76, 1.04, 1.24,
+											1.15, 0.80, 0.39, 0.18, 0.23, 0.36,
+											0.33, 0.02, -0.46, -0.82, -0.90,
+											-0.74, -0.58, -0.64, -0.93, -1.24,
+											-1.31, -1.08, -0.70, -0.43, -0.43,
+											-0.59, -0.66, -0.45, 0.00 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Two strings vibrating',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-outofphase').getContext('2d');
+		new Chart(ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '' ],
+						datasets : [
+								{
+									label : 'wave 1',
+									fill : false,
+									borderColor : 'rgb(190, 220, 190)',
+									data : [ 0.00, 0.16, 0.25, 0.22, 0.09,
+											-0.09, -0.22, -0.25, -0.16, 0.00,
+											0.16, 0.25, 0.22, 0.09, -0.09,
+											-0.22, -0.25, -0.16, 0.00 ]
+								},
+								{
+									label : 'wave 2',
+									fill : false,
+									borderColor : 'rgb(220, 250, 220)',
+									data : [ -0.22, -0.09, 0.09, 0.22, 0.25,
+											0.16, 0.00, -0.16, -0.25, -0.22,
+											-0.09, 0.09, 0.22, 0.25, 0.16,
+											0.00, -0.16, -0.25, -0.22 ]
+								},
+								{
+									label : 'added wave',
+									fill : false,
+									borderColor : 'rgb(90, 180, 90)',
+									data : [ -0.22, 0.07, 0.34, 0.44, 0.34,
+											0.07, -0.22, -0.41, -0.41, -0.22,
+											0.07, 0.34, 0.44, 0.34, 0.07,
+											-0.22, -0.34, -0.34, -0.22 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Two identical waves out of phase',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-antiphase').getContext('2d');
+		new Chart(ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '' ],
+						datasets : [
+								{
+									label : 'wave 1',
+									fill : false,
+									borderColor : 'rgb(190, 220, 190)',
+									data : [ 0.00, 0.16, 0.25, 0.22, 0.09,
+											-0.09, -0.22, -0.25, -0.16, 0.00,
+											0.16, 0.25, 0.22, 0.09, -0.09,
+											-0.22, -0.25, -0.16, 0.00 ]
+								},
+								{
+									label : 'wave 2',
+									fill : false,
+									borderColor : 'rgb(220, 250, 220)',
+									data : [ 0.00, -0.16, -0.25, -0.22, -0.09,
+											0.09, 0.22, 0.25, 0.16, 0.00,
+											-0.16, -0.25, -0.22, -0.09, 0.09,
+											0.22, 0.25, 0.16, 0.00 ]
+								},
+								{
+									label : 'added wave',
+									fill : false,
+									borderColor : 'rgb(90, 180, 90)',
+									data : [ 0.00, 0.00, 0.00, 0.00, 0.00,
+											0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
+											0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
+											0.00, 0.00 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Two identical waves in anti-phase',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-gain').getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+						'10' ],
+				datasets : [ {
+					label : 'output signal',
+					fill : false,
+					borderColor : 'gray',
+					data : [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
+				} ]
+			},
+			options : {
+				title : {
+					text : 'Amp gain (10x), grossly idealized',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					xAxes : [ {
+						display : true,
+						scaleLabel : {
+							display : true,
+							labelString : 'input signal ->'
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-saturation').getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ '', '(gain zone)', '|', '(saturation zone)', '' ],
+				datasets : [ {
+					label : 'output signal',
+					fill : false,
+					borderColor : 'gray',
+					data : [ 0, 25, 50, 50, 50 ],
+					lineTension : 0
+				} ]
+			},
+			options : {
+				title : {
+					text : 'Amp gain + saturation, idealized',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					xAxes : [ {
+						display : true,
+						scaleLabel : {
+							display : true,
+							labelString : 'input signal ->'
+						}
+					} ],
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-tube-saturation').getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ '', '(gain zone)', '|', '(saturation zone)', '' ],
+				datasets : [ {
+					label : 'output signal',
+					fill : false,
+					borderColor : 'gray',
+					data : [ 0, 25, 45, 50, 50 ]
+				} ]
+			},
+			options : {
+				title : {
+					text : 'Tube amp gain + saturation',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					xAxes : [ {
+						display : true,
+						scaleLabel : {
+							display : true,
+							labelString : 'input signal ->'
+						}
+					} ],
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+
+		ctx = document.getElementById('chart-distorted-wave').getContext('2d');
+		new Chart(
+				ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '', '', '', '', '',
+								'', '' ],
+						datasets : [
+								{
+									label : 'unaltered',
+									fill : false,
+									borderColor : 'lightgreen',
+									data : [ 0.00, 0.17, 0.34, 0.50, 0.64,
+											0.77, 0.87, 0.94, 0.98, 1.00, 0.98,
+											0.94, 0.87, 0.77, 0.64, 0.50, 0.34,
+											0.17, 0.00, -0.17, -0.34, -0.50,
+											-0.64, -0.77, -0.87, -0.94, -0.98,
+											-1.00, -0.98, -0.94, -0.87, -0.77,
+											-0.64, -0.50, -0.34, -0.17, 0.00,
+											0.17, 0.34, 0.50, 0.64, 0.77, 0.87,
+											0.94, 0.98, 1.00, 0.98, 0.94, 0.87,
+											0.77, 0.64, 0.50, 0.34, 0.17, 0.00,
+											-0.17, -0.34, -0.50, -0.64, -0.77,
+											-0.87, -0.94, -0.98, -1.00, -0.98,
+											-0.94, -0.87, -0.77, -0.64, -0.50,
+											-0.34, -0.17, 0.00 ]
+								},
+								{
+									label : 'distorted',
+									fill : false,
+									borderColor : 'orange',
+									data : [ 0, 0.255, 0.51, 0.75, 0.90, 0.96,
+											0.99, 1, 1, 1, 1, 1, 0.99, 0.96,
+											0.90, 0.75, 0.51, 0.255, 0, -0.255,
+											-0.51, -0.75, -0.90, -0.96, -0.99,
+											-1, -1, -1, -1, -1, -0.99, -0.96,
+											-0.90, -0.75, -0.51, -0.255, 0,
+											0.255, 0.51, 0.75, 0.90, 0.96,
+											0.99, 1, 1, 1, 1, 1, 0.99, 0.96,
+											0.90, 0.75, 0.51, 0.255, 0, -0.255,
+											-0.51, -0.75, -0.90, -0.96, -0.99,
+											-1, -1, -1, -1, -1, -0.99, -0.96,
+											-0.90, -0.75, -0.51, -0.255, 0 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Wave distortion (amplitudes equalized for comparison)',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-harmonics-natdist').getContext(
+				'2d');
+		new Chart(
+				ctx,
+				{
+					type : 'bar',
+					data : {
+						labels : [ '1st (fund.)', '2nd', '3rd', '4th', '5th',
+								'6th', '7th', '8th', '9th', '10th', '11th',
+								'12th', 'etc...' ],
+						datasets : [
+								{
+									label : 'natural (acoustic) harmonics',
+									backgroundColor : 'lightgreen',
+									borderColor : 'gray',
+									data : [ 12, 6, 4, 3, 2.4, 2, 1.71, 1.5,
+											1.33, 1.2, 1.09, 1 ],
+								},
+								{
+									label : 'distorted harmonics',
+									backgroundColor : 'orange',
+									borderColor : 'gray',
+									data : [ 12, 12, 12, 9, 7.2, 6, 5.14, 4.5,
+											4, 3.6, 3.27, 3 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Natural vs distorted harmonics (amplitudes equalized for comparison)',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-adsr-natdist').getContext('2d');
+		new Chart(
+				ctx,
+				{
+					type : 'line',
+					data : {
+						labels : [ '', '', '', '', '', '', '', '', '', '', '',
+								'', '', '', '', '', '', '', '' ],
+						datasets : [
+								{
+									label : 'natural volume',
+									fill : false,
+									borderColor : 'lightgreen',
+									data : [ 0.00, 0.50, 1, 0.70, 0.45, 0.30,
+											0.22, 0.15, 0.11, 0.08, 0.06, 0.05,
+											0.045, 0.04, 0.035, 0.030, 0.025,
+											0.020, 0.015 ],
+									lineTension : 0
+								},
+								{
+									label : 'distorted volume',
+									fill : false,
+									borderColor : 'orange',
+									data : [ 0.00, 0.75, 1, 1, 0.675, 0.45,
+											0.33, 0.225, 0.165, 0.12, 0.09,
+											0.075, 0.0675, 0.06, 0.0525, 0.045,
+											0.0375, 0.030, 0.0225 ]
+								} ]
+					},
+					options : {
+						title : {
+							text : 'Natural vs distorted dynamics (amplitudes equalized for comparison)',
+							display : true
+						},
+						tooltips : {
+							enabled : false
+						},
+						scales : {
+							yAxes : [ {
+								gridLines : {
+									drawBorder : false
+								},
+								ticks : {
+									display : false
+								}
+							} ],
+							xAxes : [ {
+								gridLines : {
+									display : false
+								}
+							} ]
+						},
+						elements : {
+							point : {
+								radius : 0
+							}
+						}
+					}
+				});
+
+		ctx = document.getElementById('chart-pickup-placement')
+				.getContext('2d');
+		new Chart(ctx, {
+			type : 'line',
+			data : {
+				labels : [ 'neck saddle', '.', '.', '.', '.', '.', '.', '.',
+						'.', '.', 'neck pickup', '.', '.', '.', '.', '.',
+						'bridge pickup', '.', 'bridge saddle' ],
+				datasets : [
+						{
+							label : '1st harmonic',
+							fill : false,
+							borderColor : 'green',
+							data : [ 0.00, 0.17, 0.34, 0.50, 0.64, 0.77, 0.87,
+									0.94, 0.98, 1.00, 0.98, 0.94, 0.87, 0.77,
+									0.64, 0.50, 0.34, 0.17, 0.00 ]
+						},
+						{
+							label : '3rd harmonic',
+							fill : false,
+							borderColor : 'lightgreen',
+							data : [ 0.00, 0.17, 0.29, 0.33, 0.29, 0.17, 0.00,
+									-0.17, -0.29, -0.33, -0.29, -0.17, 0.00,
+									0.17, 0.29, 0.33, 0.29, 0.17, 0.00 ]
+						} ]
+			},
+			options : {
+				title : {
+					text : 'Pickup placement',
+					display : true
+				},
+				tooltips : {
+					enabled : false
+				},
+				scales : {
+					yAxes : [ {
+						gridLines : {
+							drawBorder : false
+						},
+						ticks : {
+							display : false
+						}
+					} ],
+					xAxes : [ {
+						gridLines : {
+							display : true
+						}
+					} ]
+				},
+				elements : {
+					point : {
+						radius : 0
+					}
+				}
+			}
+		});
+	}
+</script>
+<span lang="en">
+	<h1>How an electric guitar works</h1>
+
+	<p>Electric guitars are my passion; one of them, at least. I love
+		their eclectic nature, ranging all the way from sensitive to
+		energetic, from cristal clean to horridly noisy, from subtle to loud.
+		They're my big frustration too: I've spent years on them, but achieved
+		nothing worth. I love music, but I'm terribly bad at it.</p>
+
+	<p>Anyway, I like talking about guitars, hence this article. My
+		intention isn't explaining the obvious: that an electric guitar works
+		by converting the vibration of a steel-made string into an electric
+		signal by electromagnetic induction (the same working principle of
+		your bycicle dynamo). My goal is fully different. You often watch a
+		guy playing a weathered guitar with a loosy amp and: wow, how could
+		possibly this guy get that sound?! That's what I want to talk about.</p>
+
+	<p>And -well- it's mostly wave physics plus taste and musical
+		sense. The first can be explained, that's what I'm in. The second is a
+		mistery, one may have it or not. But it's the most important
+		ingredient, and sadly the one I lack.</p>
+
+	<p>It's worth noting that wave physics also plays a big role in
+		acoustic / classical guitars, of course, but its effect is highly
+		emphasized in electric guitars by amplification and distortion.</p>
+
+	<p>
+		Because -first important lesson here- the instrument of the electric
+		guitarist is the combination of guitar <em>and</em> amplifier. Not
+		only because an electric guitar is useless without an amp; also
+		because a certain guitar and a certain amp defines what the player can
+		do. Sound-wise, I mean; playing technique is a fully different matter.
+	</p>
+
+	<p>Ok, let's play! I'm starting by purely-acoustic wave physics and
+		then moving on to the effect of amplification on it.</p>
+
+	<ol>
+		<li><a href="#section1">Dynamics</a></li>
+		<li><a href="#section2">One string vibrating - Harmonics</a></li>
+		<li><a href="#section3">Two (or more) string vibrating - Wave
+				addition?</a></li>
+		<li><a href="#section4">Electric amplication - Distortion!</a></li>
+		<li><a href="#section5">Amp stages</a></li>
+		<li><a href="#section6">Playing at high volume &rarr;
+				Feedback!</a></li>
+		<li><a href="#section7">Pickups</a></li>
+		<li><a href="#section8">Equalization</a></li>
+		<li><a href="#section9">Epilogue: words from wise men</a></li>
+	</ol> <a id="section1" name="section1"></a>
+	<h2>1. Dynamics</h2>
+
+	<p>
+		The most obvious aspect of the sound coming from a string is not
+		volume-related. The dynamics, or <a
+			href="https://en.wikipedia.org/wiki/Envelope_(music)">acoustic
+			envelope</a>, of a plucked string is something like this:
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-adsr-natural"></canvas>
+		<p style="text-align: center;">
+			(charting gently provided by <a href="https://www.chartjs.org/">chart.js</a>)
+		</p>
+	</div>
+
+	<p>
+		You see, there's a sharp initial raise (or <em>attack</em>), no <em>sustain</em>
+		and a relatively quick <em>decay</em> that soon gets below your
+		hearing threshold causing the string to "stop" ringing (although it
+		may keep vibrating for a bit longer). This is quite straightforward to
+		get even for people without a fine ear.
+	</p>
+
+	<p>Not much more to say about that, except that the acoustic
+		envelope is one of the two characteristics that make up for the timbre
+		of an instrument, what tells apart a guitar from a flicorno, let's
+		say.</p> <a id="section2" name="section2"></a>
+	<h2>2. One string vibrating - Harmonics</h2>
+
+	<p>When you pluck a guitar string you intuitively guess that it'll
+		going to vibrate this way:</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natural-1st"></canvas>
+	</div>
+
+	<p>The resulting tone is directly related to the vibration
+		frequency, and that depends of three physycal features of the string:
+
+
+
+	
+	<ul>
+		<li>Length. The longer the basser. Bass guitars are longer than
+			-well- regular guitars, i.e. Wave length is in fact the inverse of
+			frequency.</li>
+		<br />
+		<li>Gauge. The heavier the basser. Again, bass guitars have
+			heavier strings than guitars.</li>
+		<br />
+		<li>Tension. The higher the trebler. Within a guitar, strings
+			have diminishing gauges to get higher tones while keeping a uniform
+			tension; otherwise, treble strings would need higher tension (and
+			would be harder to pluck).</li>
+		<br />
+		<li>(well, vibration frequency also depends on the material
+			stiffness, but I'm asuming that guitar-string steel is usually quite
+			the same)</li>
+	</ul>
+	</p>
+
+	<p>Nothing fancy here, but hey: a string can actually vibrate this
+		way too:</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natural-2nd"></canvas>
+	</div>
+
+	<p>And this way:</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natural-3rd"></canvas>
+	</div>
+
+	<p>And these (infinite) other ways:</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natural-4th"></canvas>
+	</div>
+
+	<p>
+		In physycs these different modes of vibration are called -well- <em>modes
+			of vibration</em>, but in musical theory they'are usually called <em>harmonics</em>.
+		Four important things to know about them are:
+	<ul>
+		<li>Harmonic wave lentghs are always related to the furndamental
+			(base) tone by simple fractions. In the pictures above you see wave
+			lenghts of: 1, 1/2, 1/3, 1/4... The related fequencies, and thus the
+			sound tones, are the inverse of those: 1, 2, 3, 4.</li>
+		<br />
+		<li>There're infinite harmonics or increasing frequency, but</li>
+		<br />
+		<li>As you may see in the pictures above they're diminishing in
+			amplitude, and thus sound volume. The fundamental is the louder
+			harmonic, and higher ones are progressively quieter.</li>
+		<br />
+		<li>The most shocking fact: all harmonics are always present when
+			a string is vibrating.</li>
+	</ul>
+	</p>
+
+	<p>Yes, that's right. You need a fine ear to get them, but infinite
+		harmonic overtones, with diminishing amplitude, are there whenever you
+		pluck a guitar string.</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natural"></canvas>
+	</div>
+
+	<p>In acoustic guitars, the string vibration propagates through the
+		bridge to the guitar top. The top may react differently to different
+		frequencies, and therefore some harmonics may be damped or even killed
+		altogether. That's what distinguishes a classical guitar from a
+		western acoustic, for instance (the later being richer in higher
+		harmonics). In fact, harmonic spectrum is the second component of an
+		instrument timbre.</p>
+
+	<p>You can also modify slightly the harmonic spectrum by retaining
+		the string at certain points with your finger tip, but that's part of
+		playing technique and not too relevant for our current discussion.</p>
+
+	<p>To end this section: as you may know, or suspect, harmonics are
+		the base of the musical device of harmony. But that's too huge a world
+		apart, we won't come into it (today).</p> <a id="section3" name="section3"></a>
+	<h2>3. Two (or more) strings vibrating - Wave addition?</h2>
+
+	<p>When you have two random waves together you intuitively guess
+		they will add to form a larger wave, but look:</p>
+
+	<div class="chart">
+		<canvas id="chart-2strings"></canvas>
+	</div>
+
+	<p>
+		When two peaks or two valleys meet they do add up; but when a peak
+		meets a valley, they actually substract. When two random strings are
+		plucked together what you got is an irregular, pulsating wave
+		unpleasant to you ear. That's what <em>dissonance</em> is.
+	</p>
+
+	<p>But it is actually worse. Remember harmonics? When two strings
+		are plucked together what you got are two full sets of harmonics
+		fighting each other, causing a mess of interfeering waves. Acostic
+		chaos!</p>
+
+	<p>You may be thinking that when two strings in a guitar are
+		plucked together they usually sound good. Well, you're right, but they
+		do only under very restrictive conditions:
+	<ul>
+		<li>The guitar is properly tuned; and</li>
+		<br />
+		<li>You finger the right frets to choose two notes that actually
+			fit together.</li>
+	</ul>
+	</p>
+
+	<p>
+		That right fit is achieved when both notes' fundamental frequencies
+		have a simple mathematical relation such as: 1, 1/2, 1/3, 2/3... The
+		reason is that, while they still will interfere with each other,
+		they'll do in a regular, periodic manner that your ear will easilly
+		accept. That's what we call a <em>chord</em>. We're being dragged
+		again into the world of harmony, which is precisely the theory of
+		chord formation; but still, we won't come into it (today).
+	</p>
+
+	<p>Achieving a nice relation between two fundamental notes doesn't
+		ensure that all of their harmonics will do. In fact most of the times
+		they won't, but you know, higher harmonics have progressively
+		diminishing volumes, so the interference they cause is progressively
+		less relevant. That's why some kind of chords sound better than
+		others; some are smooth and regular (i.e. major chords), some are
+		slightly dissonant. You need a very fine ear to pick that; people not
+		having it (like myself) can anyway perceive the subjective, distinct
+		"mood" of each chord type. And anyway they can definitely learn
+		harmony, duh.</p>
+
+	<p>Of course guitar players aren't restricted to two-note chords,
+		up to six can be used, but that doesn't change the discussion above
+		too much. Sure, the more notes the messier, but when you play
+		six-string chords in a guitar you're most of the time playing simple
+		5th (three-note) chords with some duplicate notes. That's fine to gain
+		volume and presence without extra harmonic complexity. Certain styles
+		of music favour 7th and higher chords where a greater amount of
+		dissonance is unavoidable; Jazz, for instance (no wonder dissonance is
+		an important feature of Jazz music).</p>
+
+	<p>
+		A last thing I should mention. What if you have two waves of the same
+		frequency and amplitude playing together? If their peaks and valleys
+		are "synchronized" they just add up, producing a wave two times the
+		amplitude; in wave physics they're said to be <em>in phase</em>. When
+		<em>out of phase</em> sometimes they'll add and sometimes they'll
+		substract, therefore yielding a wave of the same frequency but with
+		less-than-double amplitude.
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-outofphase"></canvas>
+	</div>
+
+	<p>
+		When in <em>anti-phase</em> they will cancel each other altogether.
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-antiphase"></canvas>
+	</div>
+
+	<p>That can't happen within an acoustic guitar. But it'll be
+		relevant later, and now was the right moment to introduce it.</p>
+
+	<p>Ok, time to switch the amp on.</p> <a id="section4" name="section4"></a>
+	<h2>4. Electric amplification - Distortion!</h2>
+
+	<p>
+		An amp, by definition, takes an electric signal and outputs a higher
+		level one. The output / input level ratio is what we call the amp <em>gain</em>.
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-gain"></canvas>
+	</div>
+
+	<p>
+		But every electronic amp has a maximum, or <em>saturation</em>, output
+		level which can't be exceeded; when your input level times gain would
+		be over the saturation level, what you got is exactly that level.
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-saturation"></canvas>
+	</div>
+
+	<p>The fine thing about old-school tube amps favoured by guitar
+		players is that the transition from gain operation to saturation is
+		relatively smooth.</p>
+
+	<div class="chart">
+		<canvas id="chart-tube-saturation"></canvas>
+	</div>
+
+	<p>If you feed a weak input signal into the amp, it may keep within
+		the gain zone. As a result you get a high-fidelity reproduction of
+		your signal with higher volume level. It's when you feed a higher
+		level signal, or use a higher gain, when the amp starts doing its
+		magic.</p>
+
+	<div class="chart">
+		<canvas id="chart-distorted-wave"></canvas>
+	</div>
+
+	<p>
+		You see, your clean sine wave is transformed into a weird shape,
+		resulting from softly clipping the original peaks. That's what we call
+		<em>distortion</em>, and when it makes its appearance beautiful things
+		happen.
+	</p>
+
+	<p>Take for instance your acoustic envelope; under distortion the
+		string dynamics are transformed into something like this:</p>
+
+	<div class="chart">
+		<canvas id="chart-adsr-natdist"></canvas>
+	</div>
+
+	<p>You're losing attack, gaining sustain and a longer decay. That
+		makes up for the usual long-ringing, flute-like dynamics of a guitar
+		solo.</p>
+
+	<p>Maybe even more dramatic is the effect on harmonics. Lower (and
+		louder) harmonics may push the amp into saturation, while higher ones
+		may still fit within the gain zone. As a result, the fundamental is
+		equalized with adjacent harmonics and higher ones get to be more
+		prominent, making up for a richer tone with a lot of low-end and
+		sparkling top.</p>
+
+	<div class="chart">
+		<canvas id="chart-harmonics-natdist"></canvas>
+	</div>
+
+	<p>So, you're altering the dynamics and harmonic spectrum of your
+		guitar, and therefore its timbre. You can have many different
+		instruments just by changing your amp gain!</p>
+
+	<p>What if you pluck two strings simultaneously? Remember that
+		harmonic interference will usually lead to a pulsating wave. That's
+		barely noticeable in an acoustic guitar, but, as said before,
+		distortion clips / equalizes lower harmonics and emphasizes the higher
+		ones, making up for a lot of potential interference. As a result a
+		chord in an electric guitar will result in a sustained, rasp, growling
+		sound that makes your heart jump in wild emotion. Rock and Roll!</p>
+
+	<p>
+		If you pluck more strings, you get into trouble, though. The more
+		harmonics you add -and the more distortion you set- the more a
+		harmonic mess your sound will be. When playing chords in an electric
+		guitar you need to make a compromise: if you want complex harmonies
+		you need to keep you amp gain low. If you want heavy distortion you
+		need to keep chords to its bare minimum; that's why <em><a
+			href="https://en.wikipedia.org/wiki/Power_chord">power chords</a></em>
+		where devised: simple two- o three-note chords that will sound neat
+		and punchy under distortion.
+	</p>
+
+	<p>As a conclussion, it must be emphasized that the main aspect
+		governing amp distortion (apart from the amp gain) is input level. Low
+		input levels will go neutral through your amp, only high-enough levels
+		will push it into saturation. Between your guitar and your amp, a lot
+		of things may modify your signal level, starting by the guitar and the
+		player themselves: some guitars are "hotter" than others (see pickup
+		sections below) and you may pluck the string softly or heavily.</p>
+
+	<p>Every effect pedal and effect processor is a point where signal
+		level may change. Amplification-based (distortion) pedals and
+		boosters, by definition, affect your signal level. You don't only need
+		to care about the signal level fed into the amp but also the level
+		that every pedal feeds into the next one. Of course every pedal has an
+		output volume knob for that.</p>
+
+	<p>Time-based effects (phasers, choruses, flangers, delays) are
+		specially tricky, as their output level will usually oscillate.
+		Chances there are that the output signal from those saturate your amp
+		only at periodic -or worse, erratic- peaks, leading your amp to a
+		pulsating or unpredictable distortion.</p> <a id="section5"
+	name="section5"></a>
+	<h2>5. Amp stages</h2>
+
+	<p>In primitive amps distortion was deemed a deffect or limitation.
+		The idea was to amplify the signal with high-fidelity, but with the
+		technology then available some distortion couldn't be avoided when the
+		amp was taken near its maximum volume.</p>
+
+	<p>Anyway, those first electric guitar players soon appreciated the
+		benefits of distortion, and it became a prominent feature in Rock
+		music. But then a problem showed up: in order to have distortion the
+		amp needed to be cranked up, which could or couldn't be appropiate for
+		certain gigs: given the required volume for the room size, a low power
+		amp could give too much distortion and a high power one maybe too
+		little.</p>
+
+	<p>
+		That difficulty was overcame by building amps in two stages called <em>preamp</em>
+		and <em>power stage</em>. In theory, the preamp is where the
+		distortion is set, usually by a knob labelled <em>gain</em>. After
+		that, the power stage sets the required ouput volume by a <em>master</em>
+		knob and usually has a builtin equalizer to tweak your tone. The
+		two-stage design has an additional benefit: some effect pedals and
+		processors that are more suitable to be applied after the signal
+		distortion can be inserted between both stages; amps usually have send
+		/ return jacks for that. Amps also usually feature several <em>channels</em>;
+		that's simply different preamps with different amounts of distortion,
+		suitable for different styles of music as well as to change dynamics
+		within a piece (for example, between rythm and solo work). Most amps
+		are built this way nowadays.
+	</p>
+
+	<p>Anyway, in an all-tube amp, the power stage can distort too! And
+		some players favour its usually harsh distortion over the creamier one
+		produced by the preamp tubes. So, back to the beginning: the desired
+		distortion amount and quality doesn't always relate well to the
+		required output level. First consideration when buying an amp,
+		therefore, is the required power for the player needs. Some modern
+		amps feature selectable output level for the power stage; that is a
+		wonderful idea.</p> <a id="section6" name="section6"></a>
+	<h2>6. Playing at high volume &rarr; Feedback!</h2>
+
+	<p>Well, you have your string vibration transformed into an
+		electric wave, sent to the amp, amplified and cast into the air by the
+		loudspeaker. The pressure waves (that's what sound is) will get back
+		to the string; when playing at high volume, chances there are that
+		they push the string into vibration again, thus reinforcing the
+		electric wave sent to the amp, pushing further the string and so on.
+		You've hit a feedback loop!</p>
+
+	<p>If distortion makes your guitar get sustain, feedback can make
+		for a lot more of it. Actually, given the right conditions, feedback
+		can make your guitar sustain forever (while your amp keeps working,
+		duh). Feedback also reinforces your input signal to the amp, pushing
+		it further into saturation, thus enriching your tone.</p>
+
+	<p>
+		The beautiful thing about feedback is its live, organic, wild nature.
+		For it to work, the right harmonic need to reach the string <em>in
+			phase</em>, and that's not easy. Sound waves are reflected on walls and
+		other objects; a certain harmonic may be filtered out by the
+		reflecting surface material, and those which make up to the string
+		will hit it in or out of phase depending on the overall round trip
+		distance from the loudspeaker to the reflecting surface and back to
+		the string. Hence, feedback is really sensitive to the environment,
+		amp equalization, body position and even room temperature. Controlling
+		it is part of the playing technique of an electric guitar player.
+	</p>
+
+	<p>Sure, you crank up your amp master volume knob and eventually
+		any string will get into feedback, but it's a miracle it'll have any
+		musical value. For it to add up to your music you need to get the
+		right harmonic in the right amount at the precise moment you need it.
+		That's tough to master.</p>
+
+	<p>In any case you need to play your guitar LOUD. Not as loud as to
+		make your head explode or push your amp into an uncontrollable mess,
+		but in the right amount to achieve some tone-improving feedback. It's
+		a shame that's usually above the tolerable volume level for your home.
+		If you're wondering whether your amp isn't worth the lot of money you
+		paid for it, maybe you just need to crank it up a little bit. Get a
+		rehearsal room. Use taste.</p> <a id="section7" name="section7"></a>
+	<h2>7. Pickups</h2>
+
+	<p>Pickups, you know, are those little devices below the strings
+		where the electromagnetic induction thing happens.</p>
+
+	<p>First thing to know is that there're two fundamental ways to
+		build a pickup: with a single coil or with two reversely-magnetized
+		coils.</p>
+
+	<p>
+		Single-coil pickup are the simplest and oldest ones. They provide a
+		clean, harmonic-rich, bell-like sound, somehow similar to that of an
+		acoustic guitar. They have a problem, too: they're very prone to pick
+		up enviromental electromagnetic radiation (tipically from electric
+		apparels nearby) causing an audible <em>hum</em> in your amp that gets
+		to be very annoying at high gains and high volumes.
+	</p>
+
+	<p>
+		That's precisely what two-reversely-magnetized-coils pickups where
+		designed for, and that's why they were given the catchier denomination
+		of <em>humbuckers</em>. These pickups effectively cancel
+		environment-inducted hum, but at the cost of a poorer tone: darker,
+		heavier, with less harmonics.
+	</p>
+
+	<p>Both types are in use nowadays, and are usually devoted to
+		different kinds of music. Single-coils are appropiate for light,
+		low-distortion sounds, where hum isn't much of a problem and harmonic
+		spectrum isn't too much adulterated. Humbuckers, on the other side,
+		perform better with high distortion because their narrower spectrum
+		prevents the messy harmonic interference to some extent. Also because
+		a pair of coils give a higher signal that pushes your amp into
+		saturation more readily.</p>
+
+	<p>
+		Electric guitars usually have two or three pickups in different
+		positions usually identified as: neck, middle (when there's one) and
+		bridge pickup. The main difference between them is that they <em>see</em>
+		the string differently. The neck pickup is near (or at) the center of
+		the string, therefore it picks up the first (fundamental) harmonic at
+		its maximum amplitude; bridge pickup, on the other side gets very
+		little of that and so its sound is relatively poor in low harmonics.
+	</p>
+
+	<div class="chart">
+		<canvas id="chart-pickup-placement"></canvas>
+	</div>
+
+	<p>As a result, the neck pickup yields a mellow, complex sound
+		while that of the bridge pickup is brighter and more articulate.
+		Usually the first is preferred for rythm work and the later for
+		soloing, but of course anyone can use them at will.
+	</p>
+	<p>
+		I'm not forgetting about the middle pickup: it just has an
+		intermediate character between the two others, so no much to say about
+		it. Usually a certain guitar will feature all single-coils <em>or</em>
+		all humbuckers, although mixed sets aren't uncommon-
+	</p>
+	<p>The switch for pickup selection will usually allow to choose
+		between the two or three available and several combinations of them:
+	<ul>
+		<li>In a two-pickup guitar a three-way switch allows for neck,
+			neck+bridge or bridge pickup operation.</li>
+		<br />
+		<li>In a three-pickup guitar a five-way switch allows for neck,
+			neck+middle, middle, middle+bridge or bridge pickup operation.</li>
+	</ul>
+	</p>
+
+	<p>You may guess that combining two pickups will yield a sound
+		that's a mix of both. You're right, but there're still some
+		considerations:
+	<ul>
+		<li>There're two essential ways of combining two pickups: in
+			series or in parallel. The later is the preferred method for a simple
+			reason: in-series pickups double the signal, so changing from single
+			to combined pickups would require adjusting your volume knob to keep
+			a consistent signal level; that's difficult to manage while playing.
+			But</li>
+		<br />
+		<li>When connecting pickups in series and anti-phase an
+			interesting effect shows up. Two adjacents pickups will see pretty
+			much the same fundamental but different amounts of higher armonics.
+			Thus, in anti-phase the fundamental is mostly cancelled out, leaving
+			only higher harmonics and resulting in a harsh, bright sound.
+			Generally speaking, this feature is only found in custom guitars
+			specially tailored for a player's needs; those may also include an
+			in-phase / anti-phase switch to select the mode of operation
+			(although in-series and in-phase pickup pairs are difficult to
+			handle, as said before).</li>
+		<br />
+		<li>In guitars equipped with single-coil pickups, they're usually
+			installed with their magnets alternated. That way, when you combine
+			two adjacent pickups they will benefit from some humbucking effect.
+			For the hum-canceling part, at least: real humbuckers usually have
+			their coils connected in series, thus yielding a higher level signal
+			too.</li>
+		<br />
+		<li>Another interesting tweak is having <em>coil-splittable</em>
+			humbuckers: specially wired humbuckers allowing for switcheable
+			single / dual coil operation.
+		</li>
+	</ul>
+	</p> <a id="section8" name="section8"></a>
+	<h2>8. Equalization</h2>
+	<p>As said before, mostly every amp has a builtin equalizer (eq for
+		short) that serves a few different purposes. They're usually two-
+		(bass, treble) or three-band (bass, mid, treble); if in need of a
+		finer tweaking you can always insert an external multi-band eq betwen
+		the preamp and the power stage. If you're really picky, another eq can
+		be inserted before the preamp to tweak the signal you feed into it.</p>
+
+	<p>
+		You may guess what's the main purpose of a guitar amp eq: setting your
+		overall tone to <em>cut through</em> the band mix. The natural place
+		for the guitar within a band is in the mids, so you'll usually set a
+		lot of mid and relatively low bass and treble. The exactly opposite
+		equalization isn't uncommon, though: high bass, high treble and low
+		mid: along with heavy distortion, this "scoop eq" yields a dark, heavy
+		sound with rasp highs, usually found in some metal styles. It can also
+		be nice when you play by yourself, as it makes your guitar sound <em>wider</em>
+		and fill the space.
+	</p>
+
+	<p>
+		Having a builtin eq in the amp is truly a need because, you know, your
+		gain setting alters your tone <em>a lot</em>. Adding gain results in a
+		darker tone with somehow aggresive highs that you'll need to trim to
+		your band mix. That's why a good amp won't have just one but a
+		dedicated eq for every preamp channel.
+	</p>
+
+	<p>The eq is also important to favour feedback where you want it to
+		be (tonally speaking) and restraining your pickup hum, if it's there.</p>
+
+	<p>Of course you can't always have all that said above, so
+		equalization is usually a matter of compromise. Tweak it to taste.</p>
+
+	<p>
+		A more general use for the eq, not only related to guitar amps but to
+		every sound system, is profiling your sound to compensate for room
+		behaviour. A certain wave going off the speaker will expand to every
+		surface in the room; depending on the wave frequency and the surface
+		material, it may rebound cleanly, damped or either be absorbed. Thus
+		the wave will reach your ear directly from the speaker <em>and</em>
+		rebounded from surfaces nearby <em>in different amplitude and
+			phases</em>, which may therefore add or substract. As a result, the room
+		you're in, and your position within it, will favour some frequencies
+		and damage others, severly affecting the sound spectrum. That's the
+		main reason why every decent sound system needs an eq.
+	</p>
+
+	<p>If you're playing by yourself at home, you can tweak your amp
+		for that, but playing for an audience is a fully different matter: you
+		can set a sound that makes you happy in your playing position, but
+		everybody else in the room will pick a different one. That's why
+		achieving a good live sound is so hard (and in certain rooms not even
+		possible). In big gigs, the sound coming off the amp is mic'ed (picked
+		up by a microphone) and sent to a PA, where a sound technician can
+		work out a good overall mix. The mic is usually placed very
+		close to the amp speaker, almost touching the cover grid, in order to
+		get only the sound coming directly off it, and in an very specific
+		position relative to the speaker cone.</p> <a id="section9"
+	name="section9"></a>
+	<h2>Epilogue: words from wise men</h2>
+
+	<p>
+		You should totally check <a
+			href="https://www.youtube.com/watch?v=wkhmDEKeaBU&t=675s">this
+			video</a> from Brian May. Don't let the title mislead you: the most
+		interesting part of it is the first ten minutes, when Brian talks
+		about his gear and how he uses it. Maybe you've heard before about his
+		Red Special guitar, built by his father and himself when he was a
+		teenager, featuring some interesting devices as switches to turn
+		pickups off and on, either in phase or anti-phase. It's also
+		interesting to learn how, when using time-based effects, he split his
+		signal and routes it into different amps to avoid erratic input
+		buildup that would lead to messy, non-stable distortion. No wonder he
+		ends up using fourteen (fourteen!) Vox AC-30 amps for live gigs!
+	</p>
+
+	<p>
+		I also encourage you to watch <a
+			href="https://www.imdb.com/title/tt1229360/"> It Might Get Loud</a>,
+		a documentary about the electric guitar by Davis Guggenheim with Jack
+		White, Jimmy Page and The Edge. It focus on the music and the mystic
+		of Rock and Roll rather than in technical details like those discussed
+		here, but it's a very enjoyable film anyway.
+	</p>
+
+	<p>
+		Finally, I have to recommend <a
+			href="https://www.youtube.com/channel/UC-zivSIK0ulalOOYMXCiRlw">Thomas
+			Schuber's Youtube Channel</a>. He tests guitar related gear, and he knows
+		so much about guitars and is such a good communicator that you can
+		learn a whole lotta things with his videos. He's a fine player too. I
+		bougth <a href="https://www.youtube.com/watch?v=Z2GzSd6oVnc">my
+			amp</a> because of him.
+	</p>
+</span>

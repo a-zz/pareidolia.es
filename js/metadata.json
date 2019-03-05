@@ -19,6 +19,7 @@ var site = {
 	[
 		{"pageid":"about", "title":"About this site", "description":"The usual and time-honored 'about' page", "date":"201703031426", "content":"about.html", "tags":"brⱯvⱯs"},
 		{"pageid":"failsafe", "title":"Writing fail-safe code", "description":"A brief discussion about writing robust enterprise applications", "date":"201902011715", "content":"failsafe.html", "tags":"coding"},
+		{"pageid":"eguitarhow", "title":"How an electric guitar works", "description":"What you need to know to make some controlled noise", "date":"201902281200", "content":"eguitar.html", "tags":"music"},
 	]	
 }
 /* ************************************************************************** */
