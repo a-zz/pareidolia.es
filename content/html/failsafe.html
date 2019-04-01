@@ -429,7 +429,7 @@ public void anotherFunction throws ExceptionB {
 		propagate upstream and thus needs to be declared at the function
 		prototype; otherwise, the class just won't compile. It's a nice and
 		elegant way of anticipating at build time things that could go wrong
-		at run time, and making the compiler enfoce proper handling of them.
+		at run time, and making the compiler enforce proper handling of them.
 		Generally speaking, designing your API in a way that run time errors
 		are modelled as compile time errors and hence detected by the compiler
 		is always a good idea, by the way.</p>
@@ -498,7 +498,7 @@ public void aFunction() throws MyException {
 		programatically (document management systems) will usually need to
 		delete files generated within a failed task, otherwise they may be
 		picked up by a later operation and produce inconstent results (or
-		worst: data leaks). Also, distributed systems inducting state changes
+		worse: data leaks). Also, distributed systems inducting state changes
 		in remote servers (via web services, for instance) must undo them in
 		the case of an error to avoid a distributed mess. So don't only think
 		about SQL transaction rollbacks, have your whole set of bussiness
@@ -657,7 +657,7 @@ public void makeItHappen() throws Exception {
 		sense to it: balance cost and benefits of error-handling. Sometimes
 		even the "do nothing" approach may be fine. But don't relax too much;
 		as Einstein famously said: <em>Do it as simple as possible; but
-			not more simple</em>.
+        not simpler</em>.
 	</p> <a id="section6" name="section6"></a>
 	<h2>6. Coda: assertions and unit testing</h2>
 
