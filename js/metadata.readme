@@ -15,16 +15,35 @@ site
 ..:: Defining pages ::..
 Pages are added to the site by placing an element in the site.pages array,
 each element containing the fields:
+
    .pageid: unique identifier for the page, used in site.indexpage and 
     site.menu, e.g. Ids starting with ~ are reserved for special pages (see
     below) and should be avoided.
+    
    .title: page title, used for page links and browser title bar.
+   
    .description: a simple description or abstract for the page.
+   
    .date: page date, formatted as yyyymmddhhmm.
-   .content: HTML content file under /content/html/ directory. Beware: this
-    HTML content is written to a <div> in /index.html, so it shouldn't contain
-    <html>, <head> o <body> elements. Its advisable to place content inside a 
-    <span lang="***whichever***"> for improved handling.
+   
+   .content: references the file holding the page content. HTML and MD files
+    are supported:
+     
+     * HTML content files are identified by the '.html' extension and looked for
+       under the /content/html/ directory. I.e. 'aCertainPage.html' is looked
+       for as /content/html/aCertainPage.html. Beware: upon loading the page 
+       this HTML content is written to a <div> in /index.html, so it shouldn't 
+       contain <html>, <head> o <body> elements. Its advisable to place readable 
+       content inside a  <span lang="***whichever***"> for improved handling. 
+       HTML content files can contain JavaScript code, in which case they must 
+       provide a function startContentScript() which will be invoked after
+       content is loaded.
+       
+     * MD content files are identified by the '.md' extension and looked for
+       under the /content/md/ directory. I.e. 'aCertainPage.md' is looked
+       for as /content/md/aCertainPage.md. Content is rendered as HTML by
+       remarkable.js (https://github.com/jonschlinkert/remarkable).
+    
    .tag: list of page tags, semicolon-separated.
    
 Currently known special pages are:
