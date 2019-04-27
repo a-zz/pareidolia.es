@@ -10,5 +10,9 @@
 	{ margin-top: 80px; }
 
 p { text-align: justify; }
+
+pre
+    { margin-left: 10pt; margin-right: 20%; padding: 5pt; padding-left: 10pt; 
+        color: lightgreen; background-color: #000000; }      
 	 
 /* ************************************************************************** */
