@@ -56,7 +56,7 @@ so feel free to use it at will (but fairly).
 its own source code, **brⱯvⱯs**' content managers can benefit from it too.
 
 If you have some experience with Git, the following instructions should pose no difficulty to
-you. Otherwise is a good chance to get to know Git :)
+you. If you have not, is a good chance to get to know Git :)
 
 Wouldn't you? Well, you can always [download the latest release](https://github.com/a-zz/bravas/releases/latest)
 directly.
@@ -90,7 +90,7 @@ tag afterwards:
 (refer to [https://github.com/a-zz/bravas/releases](https://github.com/a-zz/bravas/branches) 
 for a list of available versions)        
         
-Unless you're willing to contribute to **brⱯvⱯs**, or getting project updates at he cost of dealing
+Unless you're willing to contribute to **brⱯvⱯs**, or getting project updates at the cost of dealing
 with merges and conflicts (not recommended for production sites), you should unlink the source 
 repository just afterwards:
 
