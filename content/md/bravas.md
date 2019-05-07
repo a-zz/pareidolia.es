@@ -38,6 +38,8 @@ so feel free to use it at will (but fairly).
 
 ## Features likely to be added anytime soon
 
+* Automagically-generated table of contents for pages (maybe as MediaWiki's \_\_TOC\_\_).
+
 * Multilingual support for content pages.
 
 * Basic content search tool.
@@ -120,7 +122,7 @@ would be online inmmediately, for good and for free. In a nutshell:
 
         ~/bravas$ git push 
 
-Your site would almost immediately be online at https://i-am-the-walrus.github.io . It works like a charm,
+Your site would almost immediately be online at https://i-am-the-walrus.github.io. It works like a charm,
 but you should check the GitHub Pages manual anyway.
         
 ## Working with brⱯvⱯs
