@@ -97,7 +97,7 @@ repository just afterwards:
         ~$ cd bravas
         ~/bravas$ git remote rm origin
         
-In any clase, git cloning gives you -per design- a fully functional (although local) Git repository, so you can
+In any clase, Git cloning gives you -per design- a fully functional (although local) Git repository, so you can
 readily benefit from Git version control in your site.
 
 If you want to sync your local repository with a remote Git server (GitHub itself would be a
@@ -112,7 +112,7 @@ would be online inmmediately, for good and for free. In a nutshell:
 
 2. Sign in and create a repository named i-am-the walrus.github.io
 
-3. Link it your local **brⱯvⱯs** Git repository:
+3. Link your local **brⱯvⱯs** Git repository:
 
         ~/bravas$ git remote add origin https://github.com/i-am-the-walrus/i-am-the-walrus.github.io.git
         
