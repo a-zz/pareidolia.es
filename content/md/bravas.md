@@ -34,8 +34,6 @@ content management: edit, save and you're online.
 
 ### Features likely to be added anytime soon
 
-* Automagically-generated table of contents for pages (maybe as MediaWiki's \_\_TOC\_\_).
-
 * Multilingual support for content pages.
 
 * Basic content search tool.

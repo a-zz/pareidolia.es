@@ -54,16 +54,9 @@
 	<p>The discussion below proceeds from the very elemental to higher
 		levels:</p>
 
-	<ol>
-		<li><a href="#section1">Checking input</a></li>
-		<li><a href="#section2">Logging</a></li>
-		<li><a href="#section3">Exceptions</a></li>
-		<li><a href="#section4">Transactions</a></li>
-		<li><a href="#section5">Conclussion: (my) best practice; and
-				other considerations</a></li>
-		<li><a href="#section6">Coda: assertions and unit testing</a></li>
-	</ol> <a id="section1" name="section1"></a>
-	<h2>1. Checking input</h2>
+	<p>//TOC//</p>
+	
+	<h2>Checking input</h2>
 
 	<p>
 		Plainly speaking: at the very beginning of every public function, it's
@@ -96,8 +89,9 @@
 		implementing internal-use-only code, to be run in a controlled
 		environment and not to be reused elsewhere. There're often <em>economic</em>
 		reasons for that, see the Conclussions section below for more.
-	</p> <a id="section2" name="section2"></a>
-	<h2>2. Logging</h2>
+	</p> 
+	
+	<h2>Logging</h2>
 
 	<p>
 		You always want to leave a log of what your program do behind the
@@ -191,8 +185,9 @@
 		be quickly looked up within your code; "start execution" is a bad log
 		message, i.e. You can have log4j put down the line number the log
 		message was sent from, but it leads to a severe performance penalty at
-		run time, so it isn't recommended.</p> <a id="section3" name="section3"></a>
-	<h2>3. Exceptions</h2>
+		run time, so it isn't recommended.</p>
+		
+	<h2>Exceptions</h2>
 
 	<p>The meat and potatoes of error handling, and maybe the most
 		easily misused.</p>
@@ -492,8 +487,9 @@ public void aFunction() throws MyException {
 	</pre>
 
 	<p>This is very useful for wrapping up whatever you need before
-		returning. More on this just below.</p> <a id="section4" name="section4"></a>
-	<h2>4. Transactions</h2>
+		returning. More on this just below.</p>
+		
+	<h2>Transactions</h2>
 
 	<p>Transactions are usually thought of within the scope of SQL
 		operations, but in real world they are more widely needed as data will
@@ -573,8 +569,9 @@ public void makeItHappen() throws Exception {
 		data model helps a lot in building fail-safe code. When you take
 		strict argument typing to your database model, add proper foreign keys
 		and other constraints you're eliminating a huge source of
-		bad-formatted input to your code.</p> <a id="section5" name="section5"></a>
-	<h2>5. Conclussion: (my) best practice; and other considerations</h2>
+		bad-formatted input to your code.</p>
+		
+	<h2>Conclussion: (my) best practice; and other considerations</h2>
 
 	<p>All right, so you have a set of things to be done for proper
 		error handling, and it isn't always clear how to put them all
@@ -661,8 +658,9 @@ public void makeItHappen() throws Exception {
 		even the "do nothing" approach may be fine. But don't relax too much;
 		as Einstein famously said: <em>Do it as simple as possible; but
         not simpler</em>.
-	</p> <a id="section6" name="section6"></a>
-	<h2>6. Coda: assertions and unit testing</h2>
+	</p>
+	
+	<h2>Coda: assertions and unit testing</h2>
 
 	<p>Although the discussion above may be enough for enterprise
 		systems, fail-safe coding may be taken further for mission-critical
