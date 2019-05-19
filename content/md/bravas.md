@@ -34,6 +34,8 @@ content management: edit, save and you're online.
 
 ### Features likely to be added anytime soon
 
+* Automagically-generated table of contents for pages (maybe as MediaWiki's \_\_TOC\_\_).
+
 * Multilingual support for content pages.
 
 * Basic content search tool.
@@ -93,7 +95,7 @@ repository just afterwards:
         ~$ cd bravas
         ~/bravas$ git remote rm origin
         
-In any clase, git cloning gives you -per design- a fully functional (although local) Git repository, so you can
+In any clase, Git cloning gives you -per design- a fully functional (although local) Git repository, so you can
 readily benefit from Git version control in your site.
 
 If you want to sync your local repository with a remote Git server (GitHub itself would be a
@@ -108,7 +110,7 @@ would be online inmmediately, for good and for free. In a nutshell:
 
 2. Sign in and create a repository named i-am-the walrus.github.io
 
-3. Link it your local **brⱯvⱯs** Git repository:
+3. Link your local **brⱯvⱯs** Git repository:
 
         ~/bravas$ git remote add origin https://github.com/i-am-the-walrus/i-am-the-walrus.github.io.git
         
@@ -116,7 +118,7 @@ would be online inmmediately, for good and for free. In a nutshell:
 
         ~/bravas$ git push 
 
-Your site would almost immediately be online at https://i-am-the-walrus.github.io . It works like a charm,
+Your site would almost immediately be online at https://i-am-the-walrus.github.io. It works like a charm,
 but you should check the GitHub Pages manual anyway.
         
 ## Working with brⱯvⱯs
