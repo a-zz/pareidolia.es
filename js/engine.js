@@ -168,6 +168,7 @@ function renderPage(pageId, anchor) {
 function showHtmlContent(target, content, anchor) {
 	
 	target.innerHTML = content;
+    renderToc(target);
 	if(anchor!=null) {
 		// TODO Find anchor offset within content and scroll
 	}
@@ -190,14 +191,48 @@ function showMdContent(target, content) {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			eval(this.responseText);
-                var md = new Remarkable();
-                var html = md.render(content);
-                showHtmlContent(target, html, null);
+            var md = new Remarkable();
+            var html = md.render(content);
+            showHtmlContent(target, html, null);
+            renderToc(target);
 		}
 	};
 	xhttp.open("GET", 'js/remarkable.min.js', true);
 	xhttp.send();
 }    
+
+// Renders a table of contents (TOC) for the page. The TOC is placed where a
+//  paragraph containing the token //TOC// (i.e. <p>//TOC//</p>) is found; if
+//  more than one are found, only the first one is used; the TOC is not rendered
+//  otherwise. The TOC is built from <h2> headers.
+// Arguments:
+//  contentDiv (HTMLDivElement) The DIV holding the page content (and maybe the 
+//      TOC placeholder).
+// Returns:
+//  (nothing)
+function renderToc(contentDiv) {
+ 
+    var tocParagraph = null;
+    var ps = contentDiv.querySelectorAll('p');
+    for(var i = 0; i<ps.length; i++) {
+        if(ps[i].textContent=='//TOC//') {
+            tocParagraph = ps[i];
+            break;
+        }
+    }
+    if(tocParagraph!=null) {
+        tocParagraph.textContent = '';
+        var tocHTML = '<ol id="toc">';
+        var tocTargetIndex = 0;
+        contentDiv.querySelectorAll('h2').forEach((header) => {
+            tocTargetIndex++;
+            header.id = 'tocTarget' + tocTargetIndex;
+            tocHTML += '<li><a href="#tocTarget' + tocTargetIndex + '">' + header.textContent + '</a></li>';
+        });
+        tocHTML += '</ol>';
+        tocParagraph.innerHTML = tocHTML;
+    }    
+}
 
 // Render the site map
 // Arguments:
