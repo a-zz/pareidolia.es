@@ -1,0 +1,188 @@
+<meta charset="utf-8">
+<script type="text/javascript">
+	
+	function startContentScript() {
+
+		drawBoard(15);
+	}		
+	
+	function drawBoard(n) {
+		
+		var cntnr = window.document.getElementById('board-cntnr');
+		var boardHTML = '<table id="board">';
+		for(var row = 0; row <= n; row ++) {
+			boardHTML += '<tr class="board-row" id="board-row-' + row + '">'
+			for(var col = 0; col <= n; col ++) {
+				boardHTML += '<td class="board-cell number" id="board-cell-' + row + '-' + col + '">' + row*col + '</td>'
+			}
+			boardHTML += '</tr>';
+		}
+		boardHTML += '</table>';
+		cntnr.innerHTML = boardHTML;
+		
+		window.document.getElementById('board-size-txt').innerHTML = n;
+		window.document.getElementById('number-txt').innerHTML = 5;
+		calculate();
+	}
+	
+	function reset(cntrl) {
+			
+		drawBoard(cntrl.value);
+		window.document.getElementById('number').max = cntrl.value;
+	}
+	
+	function setTextOpacity(cntrl) {
+		
+		var cssRuleCode = document.all ? 'rules' : 'cssRules';
+		document.styleSheets[2][cssRuleCode][0].style.cssText = 'color: rgba(0, 0, 0, ' + cntrl.value/100 + ');';
+	}
+	
+	function calculate() {
+		
+		var outputTypeMulti= window.document.getElementById('output-colour-multi').checked;
+		
+		var n = window.document.getElementById('board-size').value;
+		var multipleOf = new Array();
+		if(!outputTypeMulti)
+            multipleOf[0] = window.document.getElementById('number').value;
+        else
+            multipleOf = getAllFactorsFor(window.document.getElementById('number').value);
+		var multipleOfTxt = window.document.getElementById('number-txt');
+		var colour = getRandomColour();
+		multipleOfTxt.innerHTML = multipleOf;
+		multipleOfTxt.style.color = colour;
+		
+		for(var row = 0; row <= n; row ++){
+			for(var col = 0; col <= n; col ++) {
+				var targetNumber = row * col;
+				var cell = window.document.getElementById('board-cell-' + row + '-' + col);				
+				if(targetNumber % multipleOf == 0)
+					cell.style.backgroundColor = colour;
+				else
+					cell.style.backgroundColor = 'transparent';
+			}
+		}
+	}
+	
+	function getRandomColour() {
+		
+		  var letters = '0123456789ABCDEF';
+		  var colour = '#';
+		  for (var i = 0; i < 6; i++) {
+		    colour += letters[Math.floor(Math.random() * 16)];
+		  }
+		  return colour;
+    }
+    
+    function getAllFactorsFor(remainder) {
+        var factors = [], i;
+
+        for (i = 2; i <= remainder; i++) {
+            while ((remainder % i) === 0) {
+                factors.push(i);
+                remainder /= i;
+            }
+        }
+
+        return factors;
+    }
+	
+</script>
+<style>				
+	td.number { color: rgba(0, 0, 0, 1); }
+	table#board { border: none }
+	tr.board-row { border: 1px solid lightgray; }
+	td.board-cell { border: 1px solid lightgray; text-align: center; font-size: 7pt; width:16pt; height: 16pt; margin: 0px; padding: 0px; transition: background-color 1s; }
+	div#control-cntnr { margin: 10pt; }	
+	td.control-control-cntnr { border: #gray 2pt solid; border-radius: 5pt; padding: 0px; }
+	div.control-caption { font-size: 10pt; font-weight: bold; margin: 0px; padding: 3pt; }
+	div.control { font-size: 10pt; margin: 0px; padding-left: 20pt; }		
+	span#board-size-txt { font-size: 10pt; width: 15pt; }
+	input.slider { opacity: 0.7; cursor: pointer;  }
+	input.slider:hover { opacity: 1; }
+</style>
+
+<span lang="en">
+    <h1>Symmetries in multiplication tables</h1>
+
+    <p>
+        (A brief discussion can be found below. The idea was taken from the guys 
+        at <a href="https://culturacientifica.com/2019/08/21/las-simetrias-ocultas-de-la-tabla-de-multiplicar/">culturacientifica.com</a>,
+        who I truly thank for this particular thing and the many other 
+        interesting reads I usually enjoy at their site. The referred article 
+        provides a more complete dicussion, although in spanish.)
+    </p>
+    
+	<div id="control-cntnr">
+		<table>
+			<tr>
+				<td class="control-control-cntnr">
+					<div class="control-caption">Size:&nbsp;<span id="board-size-txt">&nbsp;</span></div>
+					<div class="control"><input type="range" class="slider" id="board-size" min="5" max="30" value="15" oninput="reset(this);"/></div>
+				</td>
+				<td class="control-control-cntnr">
+					<div class="control-caption">
+						Show multiples of:
+						&nbsp;
+						<span id="number-txt">&nbsp;</span>
+					</div>			
+					<div class="control"><input type="range" class="slider" id="number" min="1" max="15" value="5" oninput="calculate(this);"/></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="control-control-cntnr">
+					<div class="control-caption">Show numbers:</div>
+					<div class="control"><input type="range" class="slider" id="text-opacity" min="0" max="100" value="50" oninput="setTextOpacity(this);"/></div>
+				</td>
+				<td class="control-control-cntnr">
+					<div class="control-caption">Output colour:</div>
+					<div class="control">
+						<label>Single&nbsp;<input type="radio" id="output-colour-single" name="output-colour" value="single" checked/></label>
+						&nbsp;
+						<label>Multiple&nbsp;<input type="radio" id="output-colour-multi" name="output-colour" value="multiple"/></label>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+	
+	<div id="board-cntnr"></div>
+		
+    <h2>Ok, what's that above?</h2>
+	
+	<p>
+        I'm confident you know about multiplication tables. The board above just 
+        show a number of them arranged as rows to shape a square. The number of
+        tables shown (and thus the square size) can be set by the <em>Size</em>
+        slider. It can be (mathematically) any size, but the board above is
+        limited to 30 for practical reasons.
+	</p>
+	
+	<p>
+        When you select a number by means of the <em>Show multiples of</em>
+        slider, the board will highlight those numbers in the board that are
+        multiples of it. E.g. if you choose 5: 0, 5, 10, 15, etc. will be 
+        highlighted. The main (and only?) purpose of this 
+        <a href="https://en.wikipedia.org/wiki/Useless_machine">useless machine</a>
+        is to show that multiples are regularly scattered across the 
+        multiplication tables, often in the shape of visually interesting 
+        patterns.
+	</p>
+	
+	<p>
+        For improved wonder, a <em>Multiple colour output</em> mode is provided.
+        In this mode, not only the multiples of the chosen number are highlighted
+        but also, in different colours, those of their prime factors. E.g. if
+        you choose 10, i.e. 2 x 5, the multiples of 2 and 5 will be also 
+        highlighted in different colours. When a number is a multiple of several
+        of the prime factors, all of them will be hightlighted in turns. E.g. 20
+        is a multiple of 2, 5 and 10.
+	</p>
+	
+	<p>
+        As a side effect, you may be get some ideas for you bathroom or pool
+        tiling :P . Numbers can be hidden by the <em>Show numbers</em>
+        slider if you want to focus on the merely visual.
+	</p>
+		
+</span>
