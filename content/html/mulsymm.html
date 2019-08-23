@@ -9,9 +9,14 @@
 	function drawBoard(n) {
 		
 		var cntnr = window.document.getElementById('board-cntnr');
-		var boardHTML = '<table id="board">';
+		var boardHTML = '<table id="board"><tr><th class="board-cell number">x</th>';
+		for(var col = 0; col <= n; col ++) {
+			boardHTML += '<th class="board-cell number">' + col + '</th>';
+		}
+		boardHTML += '</tr>';
 		for(var row = 0; row <= n; row ++) {
-			boardHTML += '<tr class="board-row" id="board-row-' + row + '">'
+			boardHTML += '<tr class="board-row" id="board-row-' + row + '">';
+			boardHTML += '<th class="board-cell number">' + row + '</th>';
 			for(var col = 0; col <= n; col ++) {
 				boardHTML += '<td class="board-cell number" id="board-cell-' + row + '-' + col + '">' + row*col + '</td>'
 			}
@@ -103,10 +108,11 @@
     }    	
 </script>
 <style>				
-	td.number { color: rgba(0, 0, 0, 1); }
+	.number { color: rgba(0, 0, 0, 0.5); }
 	table#board { border: none }
 	tr.board-row { border: 1px solid lightgray; }
 	td.board-cell { border: 1px solid lightgray; text-align: center; font-size: 7pt; width:16pt; height: 16pt; margin: 0px; padding: 0px; transition: background-color 1s; }
+	th.board-cell { border: none; text-align: center; font-size: 7pt; width:16pt; height: 16pt; margin: 0px; padding: 0px;  }
 	div#control-cntnr { margin: 10pt; }	
 	td.control-control-cntnr { border: #gray 2pt solid; border-radius: 5pt; padding: 0px; }
 	div.control-caption { font-size: 10pt; font-weight: bold; margin: 0px; padding: 3pt; }
@@ -123,7 +129,7 @@
         (A brief discussion can be found below. The idea was taken from the guys 
         at <a href="https://culturacientifica.com/2019/08/21/las-simetrias-ocultas-de-la-tabla-de-multiplicar/">culturacientifica.com</a>,
         who I truly thank for this particular thing and the many other 
-        interesting reads I usually enjoy at their site. The referred article 
+        interesting reads I usually enjoy at their site. The link above 
         provides a more complete dicussion, although in spanish.)
     </p>
     
@@ -166,7 +172,7 @@
 	
 	<p>
         I'm confident you know about multiplication tables. The board above just 
-        show a number of them arranged as rows to shape a square. The number of
+        shows a number of them arranged as rows to shape a square. The number of
         tables shown (and thus the square size) can be set by the <em>Size</em>
         slider. It can be (mathematically) any size, but the board above is
         limited to 30 for practical reasons.
@@ -175,7 +181,7 @@
 	<p>
         When you select a number by means of the <em>Show multiples of</em>
         slider, the board will highlight those numbers in the board that are
-        multiples of it. E.g. if you choose 5: 0, 5, 10, 15, etc. will be 
+        multiples of it. E.g. if 5 is chosen 0, 5, 10, 15, etc. will be 
         highlighted. The main (and only?) purpose of this 
         <a href="https://en.wikipedia.org/wiki/Useless_machine">useless machine</a>
         is to show that multiples are regularly scattered across the 
@@ -184,16 +190,16 @@
 	</p>
 	
 	<p>
-        For improved wonder, a second number can be added. As you may expect the
-        board will then highlight in different colours the multiples of either 
-        of them. Whenever a cell holds a number that's a multiple of both of 
-        them, it'll be highlighted with a nice gradient.
+        For improved wonder, a second number can be added. As you may expect, the
+        board will then highlight the multiples of either of them, in different
+        colours. Whenever a cell holds a number that's a multiple of both of 
+        them, it'll be highlighted with a convenient two-colour gradient.
 	</p>
 	
 	<p>
         As a side effect, you may be get some ideas for you bathroom or swimming 
         pool tiling :P . Numbers can be hidden by the <em>Show numbers</em>
-        slider if you'd rather focus on the merely visual.
+        slider if you want to focus on the merely visual.
 	</p>
 		
 </span>
