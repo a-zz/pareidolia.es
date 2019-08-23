@@ -29,6 +29,19 @@
 			
 		drawBoard(cntrl.value);
 		window.document.getElementById('number').max = cntrl.value;
+		window.document.getElementById('number2').max = cntrl.value;
+	}
+	
+	function enable2ndNumber(cntrl) {
+	        	
+        if(cntrl.checked) 
+            window.document.getElementById('number2').disabled = false;
+        else  {
+            window.document.getElementById('number2').disabled = true;
+            window.document.getElementById('number2-txt').innerHTML = '';
+        }
+        
+        calculate();
 	}
 	
 	function setTextOpacity(cntrl) {
@@ -39,27 +52,42 @@
 	
 	function calculate() {
 		
-		var outputTypeMulti= window.document.getElementById('output-colour-multi').checked;
-		
 		var n = window.document.getElementById('board-size').value;
-		var multipleOf = new Array();
-		if(!outputTypeMulti)
-            multipleOf[0] = window.document.getElementById('number').value;
-        else
-            multipleOf = getAllFactorsFor(window.document.getElementById('number').value);
+		
+		var multipleOf =  window.document.getElementById('number').value;
 		var multipleOfTxt = window.document.getElementById('number-txt');
 		var colour = getRandomColour();
 		multipleOfTxt.innerHTML = multipleOf;
 		multipleOfTxt.style.color = colour;
 		
+		var multipleOf2 = null;
+		var colour2 = null;
+		if(window.document.getElementById('enable-number2').checked) {
+            multipleOf2 =  window.document.getElementById('number2').value;
+            var multipleOf2Txt = window.document.getElementById('number2-txt');
+            colour2 = getRandomColour();
+            multipleOf2Txt.innerHTML = multipleOf2;
+            multipleOf2Txt.style.color = colour2;		
+		}
+		
 		for(var row = 0; row <= n; row ++){
 			for(var col = 0; col <= n; col ++) {
 				var targetNumber = row * col;
-				var cell = window.document.getElementById('board-cell-' + row + '-' + col);				
+				var cell = window.document.getElementById('board-cell-' + row + '-' + col);
+				var match = false;
+				var match2 = false;
 				if(targetNumber % multipleOf == 0)
+                    match = true;
+                if(multipleOf2!=null && targetNumber % multipleOf2 == 0)
+                    match2 = true;
+
+                cell.style.background = 'none';
+				if(match && !match2)
 					cell.style.backgroundColor = colour;
-				else
-					cell.style.backgroundColor = 'transparent';
+                else if(!match && match2)
+                    cell.style.backgroundColor = colour2;
+                else if(match && match2)
+                    cell.style.backgroundImage = 'linear-gradient(to right, ' + colour + ', ' + colour2 + ')';
 			}
 		}
 	}
@@ -72,21 +100,7 @@
 		    colour += letters[Math.floor(Math.random() * 16)];
 		  }
 		  return colour;
-    }
-    
-    function getAllFactorsFor(remainder) {
-        var factors = [], i;
-
-        for (i = 2; i <= remainder; i++) {
-            while ((remainder % i) === 0) {
-                factors.push(i);
-                remainder /= i;
-            }
-        }
-
-        return factors;
-    }
-	
+    }    	
 </script>
 <style>				
 	td.number { color: rgba(0, 0, 0, 1); }
@@ -135,12 +149,12 @@
 					<div class="control"><input type="range" class="slider" id="text-opacity" min="0" max="100" value="50" oninput="setTextOpacity(this);"/></div>
 				</td>
 				<td class="control-control-cntnr">
-					<div class="control-caption">Output colour:</div>
-					<div class="control">
-						<label>Single&nbsp;<input type="radio" id="output-colour-single" name="output-colour" value="single" checked/></label>
-						&nbsp;
-						<label>Multiple&nbsp;<input type="radio" id="output-colour-multi" name="output-colour" value="multiple"/></label>
-					</div>
+					<div class="control-caption">
+                        <input type="checkbox" id="enable-number2" onclick="enable2ndNumber(this);">... and:
+                        &nbsp;
+                        <span id="number2-txt">&nbsp;</span>
+                    </div>
+					<div class="control"><input type="range" class="slider" id="number2" min="1" max="15" value="5" oninput="calculate(this);" disabled/></div>
 				</td>
 			</tr>
 		</table>
@@ -170,19 +184,16 @@
 	</p>
 	
 	<p>
-        For improved wonder, a <em>Multiple colour output</em> mode is provided.
-        In this mode, not only the multiples of the chosen number are highlighted
-        but also, in different colours, those of their prime factors. E.g. if
-        you choose 10, i.e. 2 x 5, the multiples of 2 and 5 will be also 
-        highlighted in different colours. When a number is a multiple of several
-        of the prime factors, all of them will be hightlighted in turns. E.g. 20
-        is a multiple of 2, 5 and 10.
+        For improved wonder, a second number can be added. As you may expect the
+        board will then highlight in different colours the multiples of either 
+        of them. Whenever a cell holds a number that's a multiple of both of 
+        them, it'll be highlighted with a nice gradient.
 	</p>
 	
 	<p>
-        As a side effect, you may be get some ideas for you bathroom or pool
-        tiling :P . Numbers can be hidden by the <em>Show numbers</em>
-        slider if you want to focus on the merely visual.
+        As a side effect, you may be get some ideas for you bathroom or swimming 
+        pool tiling :P . Numbers can be hidden by the <em>Show numbers</em>
+        slider if you'd rather focus on the merely visual.
 	</p>
 		
 </span>
