@@ -70,7 +70,7 @@ If you want the latest stable version, just clone the master branch:
 Different versions are kept as separate branches; thus, if you want a specific version, you must
 clone the related branch:
 
-         ~# git clone --branch v0.1 https://github.com/a-zz/bravas
+         ~$ git clone --branch v0.1 https://github.com/a-zz/bravas
         
 (refer to [https://github.com/a-zz/bravas/branches](https://github.com/a-zz/bravas/branches) 
 for a list of available versions)
