@@ -22,6 +22,6 @@ var site = {
 		{"pageid":"eguitarhow", "title":"How an electric guitar works", "description":"What you need to know to make some controlled noise", "date":"201902281200", "content":"eguitar.html", "tags":"music"},
 		{"pageid":"brave", "title":"Brave", "description":"Una revisión del navegador web Brave", "date":"201904231959", "content":"brave.md", "tags":"the web"},
         {"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
-        {"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908222200", "content":"mulsymm.html", "tags":"math"},]	
+        {"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},]	
 }
 /* ************************************************************************** */
