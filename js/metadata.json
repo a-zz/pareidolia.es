@@ -2,18 +2,17 @@
  * bravas: Mini JavaScript-only CMS - Site metadata
  * ************************************************************************** */
 var site = {
-	"name":"a-zz",
+	"name":"pareidolia.es",
 	"description":"computers, etc.",
 	"indexpage":"~last",
 	"meta":
 	[
-		{"httpequiv":"description", "content":"brⱯvⱯs: Mini JavaScript-only CMS - Proof of concept!"},
-		{"httpequiv":"author", "content":"https://github.com/a-zz"}
+		{"httpequiv":"description", "content":"Antonio Suarez Pozuelo - Batiburrillo / Hotchpotch"},
+		{"httpequiv":"author", "content":"antonio@pareidolia.es"}
 	],
 	"menu":
 	[
 		{"menuid":"menu_about", "text":"About", "title":"About this site", "pageid":"about", "exturl":null},
-		{"menuid":"menu_github", "text":"Powered by GitHub!", "title":"Powered by GitHub!", "pageid":null, "exturl":"https://github.com/a-zz"}
 	],
 	"pages":
 	[
@@ -21,7 +20,8 @@ var site = {
 		{"pageid":"failsafe", "title":"Writing fail-safe code", "description":"A brief discussion about writing robust enterprise applications", "date":"201902011715", "content":"failsafe.html", "tags":"coding"},
 		{"pageid":"eguitarhow", "title":"How an electric guitar works", "description":"What you need to know to make some controlled noise", "date":"201902281200", "content":"eguitar.html", "tags":"music"},
 		{"pageid":"brave", "title":"Brave", "description":"Una revisión del navegador web Brave", "date":"201904231959", "content":"brave.md", "tags":"the web"},
-        {"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
-        {"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},]	
+        	{"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
+        	{"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},
+	]	
 }
 /* ************************************************************************** */

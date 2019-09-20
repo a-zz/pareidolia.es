@@ -80,7 +80,13 @@ function renderHeader() {
 	
 	// Draw the logo (site name & description)
 	var hdrlogo = window.document.getElementById('hdrlogo');
-	hdrlogo.innerHTML = '<a href="index.html">' + site.name + '</a> ' + site.description + '$ <span class="cursor">&#x2589;</span>';
+	var asciiname = '';
+	asciiname += '<a href="index.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;__&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___<br/>';
+	asciiname += '&nbsp;&nbsp;&nbsp;___&nbsp;&nbsp;___&nbsp;________&nbsp;(_)__/&nbsp;/__&nbsp;&nbsp;/&nbsp;(_)__&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___&nbsp;___<br/>';
+	asciiname += '&nbsp;&nbsp;/&nbsp;_&nbsp;\\/&nbsp;_&nbsp;`/&nbsp;__/&nbsp;-_)&nbsp;/&nbsp;_&nbsp;&nbsp;/&nbsp;_&nbsp;\\/&nbsp;/&nbsp;/&nbsp;_&nbsp;`/&nbsp;_&nbsp;&nbsp;/&nbsp;-_|_-&lt;<br/>';
+	asciiname += '&nbsp;/&nbsp;.__/\\_,_/_/&nbsp;&nbsp;\\__/_/\\_,_/\\___/_/_/\\_,_/&nbsp;(_)&nbsp;\\__/___/<br/>';
+	asciiname += '/_/</a>&nbsp;';
+	hdrlogo.innerHTML = asciiname + ' ' + site.description + '$ <span class="cursor">&#x2589;</span>';
 		
 	// Draw the site menu
 	var hdrmenu = window.document.getElementById('hdrmenu');
@@ -478,7 +484,7 @@ function start3rdPartyComponents(currentPageId) {
     disqusPageUrl = getCanonicalUrl(currentPageId);        
     if(disqusPageUrl!=null) {
         var d = document, s = d.createElement('script');
-        s.src = 'https://a-zz-github-io.disqus.com/embed.js';
+	s.src = 'https://pareidolia-es.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);    
         disqusPageIdentifier = currentPageId;
