@@ -20,9 +20,10 @@ var site = {
 		{"pageid":"failsafe", "title":"Writing fail-safe code", "description":"A brief discussion about writing robust enterprise applications", "date":"201902011715", "content":"failsafe.html", "tags":"coding"},
 		{"pageid":"eguitarhow", "title":"How an electric guitar works", "description":"What you need to know to make some controlled noise", "date":"201902281200", "content":"eguitar.html", "tags":"music"},
 		{"pageid":"brave", "title":"Brave", "description":"Una revisión del navegador web Brave", "date":"201904231959", "content":"brave.md", "tags":"the web"},
-        {"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
-        {"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},
-        {"pageid":"uppfb", "title":"Unknown Pleasures Pyrenees Fly-by!", "description":"3-D useless machine", "date":"201911112026", "content":"uppfb.html", "tags":"visual arts;coding;math"},
+		{"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
+		{"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},
+		{"pageid":"uppfb", "title":"Unknown Pleasures Pyrenees Fly-by!", "description":"3-D useless machine", "date":"201911112026", "content":"uppfb.html", "tags":"visual arts;coding;math"},
+		{"pageid":"oomissingparts", "title":"Missing parts", "description":"A first attempt at generative art", "date":"201911201625", "content":"oomissingparts.html", "tags":"generative art"},
 	]	
 }
 /* ************************************************************************** */
