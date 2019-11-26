@@ -24,6 +24,7 @@ var site = {
 		{"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},
 		{"pageid":"uppfb", "title":"Unknown Pleasures Pyrenees Fly-by!", "description":"3-D useless machine", "date":"201911112026", "content":"uppfb.html", "tags":"visual arts;coding;math"},
 		{"pageid":"oomissingparts", "title":"Missing parts", "description":"A first attempt at generative art", "date":"201911201625", "content":"oomissingparts.html", "tags":"generative art"},
+		{"pageid":"oohexamaze", "title":"Hexamaze", "description":"A labyrinth generator with some aesthetic intention", "date":"201911262242", "content":"oohexamaze.html", "tags":"generative art"},
 	]	
 }
 /* ************************************************************************** */
