@@ -518,7 +518,7 @@ public void aFunction() throws MyException {
 		usually need to be rethrown (as is or as a custom exception) after the
 		rollback.</p>
 
-	<p>Don't just catch-and forget: exceptions can also pop within
+	<p>Don't just catch-and-forget: exceptions can also pop within
 		catch and finally blocks; if you ignore them within a mitigation
 		process your data will very like end in an inconsistent state.</p>
 
@@ -569,7 +569,7 @@ public void makeItHappen() throws Exception {
 		data model helps a lot in building fail-safe code. When you take
 		strict argument typing to your database model, add proper foreign keys
 		and other constraints you're eliminating a huge source of
-		bad-formatted input to your code.</p>
+		badly formatted input to your code.</p>
 		
 	<h2>Conclussion: (my) best practice; and other considerations</h2>
 
