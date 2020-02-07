@@ -155,7 +155,7 @@
 	<ul>
 		<li>WARN &gt; <strong>DPRTC</strong> &gt; INFO to log
 			data-protection related activities (e.g. access to personal data),
-			mostly for regulation compliance.
+			mostly for regulatory compliance.
 		</li>
 		<br />
 		<li>DEBUG &gt; <strong>SQL</strong> &gt; TRACE to log database
@@ -195,7 +195,7 @@
 	<p>Exceptions are meant for two things: i. keeping your working
 		code tidy by separating the error handling code; and ii. solving a
 		general problem within program execution: the function where an error
-		pops isn't usually the function that can deal with it.</p>
+		pops up isn't usually the function that can deal with it.</p>
 
 	<p>Let's see. Traditional error handling (e.g. in Exception'less
 		languages such as C) is usually done via the function return value.
@@ -298,9 +298,9 @@ int innerFunction(int* errorCode)
 
     // Call aFunction()
     int* errorCode;
-    int aFunctionResult = innerFunction(int* errorCode);
+    int aFunctionResult = aFunction(int* errorCode);
     if(*errorCode==-1)
-        return 0;
+        return -1;
         
     // Do something later
     return result;
@@ -384,7 +384,7 @@ public static void main(String[] args) {
 		situations in which you need to propagate errors up the function
 		calling stack. This is no rare, but truly the ordinary, and it's
 		related to something that was anticipated and the beginning of this
-		section: the function where an error pops isn't usually the function
+		section: the function where an error pops up isn't usually the function
 		that can deal with it. For instance: in your online shop there's a
 		function for cart checkout; this function will call another one that
 		creates and order; this will call another one to check for stock; this
@@ -496,7 +496,7 @@ public void aFunction() throws MyException {
 		often not only reside in databases. E.g. applications producing files
 		programatically (document management systems) will usually need to
 		delete files generated within a failed task, otherwise they may be
-		picked up by a later operation and produce inconstent results (or
+		picked up by a later operation and produce inconsistent results (or
 		worse: data leaks). Also, distributed systems inducting state changes
 		in remote servers (via web services, for instance) must undo them in
 		the case of an error to avoid a distributed mess. So don't only think
@@ -513,7 +513,7 @@ public void aFunction() throws MyException {
 		maybe a catch-all handler, catch(Exception e), for unanticipated
 		errors should rollback the transaction too, just in case. This
 		guarantees data integrity, but that isn't usually enough, probably
-		there're furhter operations to be done to close the error situation
+		there're further operations to be done to close the error situation
 		(again, at least the "sorry guy" message), so the exception will
 		usually need to be rethrown (as is or as a custom exception) after the
 		rollback.</p>
