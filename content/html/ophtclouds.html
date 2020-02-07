@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<span lang="en">
+	<h1>Halftone Clouds</h1>
+	<iframe src="https://www.openprocessing.org/sketch/824299/embed/" width="100%" height="750"></iframe>
+	<p>
+    	I like clouds, <a href="https://en.wikipedia.org/wiki/Op-art">op-art</a>, 
+    	and the possibilities and tradition of <a href="https://en.wikipedia.org/wiki/Halftone">halftone</a> 
+    	in pop-art*, why not putting it all together?
+    </p>
+    <p>
+		I've also come to know (and enjoy) <a href="https://en.wikipedia.org/wiki/Perlin_noise">
+		Perlin noise</a>. That's a clever algorithm for generating random noise 
+		that changes smoothly over any number of dimensions. For the sketch 
+		shown above, Perlin noise is computed for x, y and t dimensions, as 
+		clouds have random spatial density changing randomly over time. p5.js 
+		has a builtin function for Perlin noise, so it's as easy as ABC 
+		(although the scales for the dimensions involved must be carefully 
+		tweaked to get a naturally-looking effect). You may have notice that the 
+		clouds above travel slowly sideways, although the underlying dots have 
+		static positions; that's simply achieved by increasing slightly over 
+		time the value of the x dimension used to compute noise.
+	</p>
+	<p>
+		I'd like to have the sketch above shown fullscreen, but for any reason 
+		p5.js has poor performance drawing varying-size dots. Still working on 
+		improving it.
+	</p>
+	<p>
+		* Ok, <a href="https://en.wikipedia.org/wiki/Roy_Lichtenstein">Roy 
+		Lichtenstein</a> was prone to <a href="https://en.wikipedia.org/wiki/Ben_Day_process">
+		Ben Day dots</a> rather than halftone, but well, you know.
+	</p>
+</span>

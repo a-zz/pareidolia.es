@@ -23,7 +23,9 @@ var site = {
 		{"pageid":"bravas", "title":"brⱯvⱯs", "description":"Mini Javascript-only CMS", "date":"201905192024", "content":"bravas.md", "tags":"brⱯvⱯs"},
 		{"pageid":"mulsymm", "title":"Symmetries in multiplication tables", "description":"A simple mathematical toy", "date":"201908231637", "content":"mulsymm.html", "tags":"math"},
 		{"pageid":"uppfb", "title":"Unknown Pleasures Pyrenees Fly-by!", "description":"3-D useless machine", "date":"201911112026", "content":"uppfb.html", "tags":"visual arts;coding;math"},
-		{"pageid":"oomissingparts", "title":"Missing parts", "description":"A first attempt at generative art", "date":"201911201625", "content":"oomissingparts.html", "tags":"generative art"},
+		{"pageid":"opmissingparts", "title":"Missing Parts", "description":"A first attempt at generative art", "date":"201911201625", "content":"opmissingparts.html", "tags":"generative art"},
+		{"pageid":"ophexamaze", "title":"Hexamaze", "description":"A labyrinth generator with some aesthetic intention", "date":"201911262242", "content":"ophexamaze.html", "tags":"generative art"},
+		{"pageid":"ophtclouds", "title":"Halftone Clouds", "description":"Op-art, pop-art, generated clouds", "date":"202001201530", "content":"ophtclouds.html", "tags":"generative art"},
 	]	
 }
 /* ************************************************************************** */
