@@ -26,6 +26,7 @@ var site = {
 		{"pageid":"opmissingparts", "title":"Missing Parts", "description":"A first attempt at generative art", "date":"201911201625", "content":"opmissingparts.html", "tags":"generative art"},
 		{"pageid":"ophexamaze", "title":"Hexamaze", "description":"A labyrinth generator with some aesthetic intention", "date":"201911262242", "content":"ophexamaze.html", "tags":"generative art"},
 		{"pageid":"ophtclouds", "title":"Halftone Clouds", "description":"Op-art, pop-art, generated clouds", "date":"202001201530", "content":"ophtclouds.html", "tags":"generative art"},
+		{"pageid":"webcharsets", "title":"Charsets in the web", "description":"Let's be careful out there (charset-handling wise)", "date":"202005201350", "content":"webcharsets.md", "tags":"the web;coding"},
 	]	
 }
 /* ************************************************************************** */
