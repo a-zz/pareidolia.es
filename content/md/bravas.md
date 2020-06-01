@@ -36,6 +36,8 @@ content management: edit, save and you're online.
 
 * Multilingual support for content pages.
 
+* JavaScript utility library for content enhancement (e.g. page image gallery, dynamic content layout, etc.).
+
 * Basic content search tool.
 
 ### Features wishfully to be added (but definitely not soon)
