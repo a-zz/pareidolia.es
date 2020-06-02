@@ -154,10 +154,10 @@ function renderPage(pageId, anchor) {
                 showMdContent(document.getElementById("cntnr-html"), this.responseText);
 	};
     if(page.content.endsWith('.html'))
-        xhttp.open("GET", 'content/html/' + page.content, true);
+        xhttp.open("GET", 'content/html/' + page.content + '?' + new Date().getTime(), true);
     else if(page.content.endsWith('.md'))
-        xhttp.open("GET", 'content/md/' + page.content, true);
-	xhttp.send();
+        xhttp.open("GET", 'content/md/' + page.content + '?' + new Date().getTime(), true);
+    xhttp.send();
 }
 
 // Writes the HTML content to target DIV
