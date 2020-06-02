@@ -155,8 +155,10 @@ function renderPage(pageId, anchor) {
 	};
     if(page.content.endsWith('.html'))
         xhttp.open("GET", 'content/html/' + page.content + '?' + new Date().getTime(), true);
-    else if(page.content.endsWith('.md'))
+    else if(page.content.endsWith('.md')) {
+        xhttp.overrideMimeType('text/markdown');
         xhttp.open("GET", 'content/md/' + page.content + '?' + new Date().getTime(), true);
+    }
     xhttp.send();
 }
 
