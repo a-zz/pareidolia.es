@@ -1,13 +1,17 @@
-/* ************************************************************************** 
- * bravas: Mini JavaScript-only CMS - Site metadata manual
+/* ************************************************************************** *
+ * bravas: Mini JavaScript-only CMS - Site metadata manual                    *
  * ************************************************************************** */
  
 Site content is described as a JSON object structured as:
 
 site
- .name: Site name, used for logos, titles, etc.
- .description: Site description, used for logos, titles, etc.
+ .name: site name, used for logos, titles, etc.
+ .description: site description, used for logos, titles, etc.
  .indexpage: site index page referred by its id (see "Defining pages" below).
+ .config: internal site configuration, currently only
+  .clientsidecachebypass: when true, content requests are timestamped to bypass
+    server cache settings; can be set to false when willing (and able) to tweak
+    the cache settings server-side.
  .meta: array of HTML <meta> tags for site pages (see "Defining metas").
  .menu: array of top menu links (see "Defining menu links").
  .pages: array of site content pages  (see "Defining pages").

@@ -5,6 +5,11 @@ var site = {
 	"name":"pareidolia.es",
 	"description":"computers, etc.",
 	"indexpage":"~last",
+	"config":
+	{
+		"clientsidecachebypass":false
+	}
+	,
 	"meta":
 	[
 		{"httpequiv":"description", "content":"Antonio Suarez Pozuelo - Batiburrillo / Hotchpotch"},
