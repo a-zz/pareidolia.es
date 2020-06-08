@@ -32,7 +32,7 @@ Notes:
 
 (*) Of course, I wasn't fully aware until I recently faced an odd issue when proxying a Tomcat app (with ISO-8859-1 charset) through an Apache reverse proxy. When proxying HTML content, links must be rewritten to make them coherent accross the proxy (i.e. inner `http://back.end/url` must be rewritten as outer `http://front.end/url`); Apache has a module just for that: [mod_proxy_html](https://httpd.apache.org/docs/2.4/mod/mod_proxy_html.html), which on Linux hosts relies on [libxml2](http://xmlsoft.org/) for XML processing; libxml2's default charset's UTF-8, so proxying our Tomcat app means translating ISO-8859-1 into UTF-8, parsing, rewriting and then translating back into ISO-8859-1. The issue: certain HTML entities (e.g. &uarr;) have a UTF-8 representation, but lack one in ISO-8859-1; thus, the first translation works fine but the second one fails. 
 
-(BTW, cheers to Nick Kew @apache.org for pointing that out, as well as promptly patching mod_proxy_html code for a side effect with HTML forms posted accross a charset-converted proxy) 
+(BTW, cheers to Nick Kew @apache.org for pointing that out, as well as promptly [patching](https://bz.apache.org/bugzilla/show_bug.cgi?id=64443) mod_proxy_html code for a side effect with HTML forms posted accross a charset-converted proxy.) 
 
 Repeating it won't hurt: charset conversion happens everywhere; awareness of it helps tracking down potential issues; avoiding it when possible should be taken as best practice.
 
