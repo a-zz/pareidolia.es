@@ -17,9 +17,8 @@ The development of thermodynamics was originally aimed precisely at improving th
 Irreversibility is precisely the key concept for our discussion. Once heat is wasted, the process is irreversible; reciprocally, any irreversible process will waste heat. Don't want to dig deeper into that: it's out of the scope of this article and well beyond my knowledge of thermodynamics. Just keep that idea in mind.
 
 So I had to make the following objection to Juan Luis' rule of thumb: if all of a computer's power input is delivered as heat (i.e. 0% efficiency), where's the utility of the information processed by that computer? Dunno about that -he said-; but taking it all as waste heat accounts for a nice margin of safety in the design of the cooling system, which is -you know- peace of mind for an engineer.
-All right. 
 
-Duly noted and put aside.
+All right. Duly noted and put aside.
 
 But only until a few weeks ago, when I got, just out of curiosity, this book on Steganography: [Disappearing Cryptography](https://dl.acm.org/doi/book/10.5555/1523275), by Peter Weiner. It's a really nice book on a really interesting matter well worth to be discussed maybe in a later article. But it's brought here today because it provided, as a side note, a good lead about the thermodynamic cost of information: the so-called [Landauer's Principle](https://en.wikipedia.org/wiki/Landauer%27s_principle).
 
