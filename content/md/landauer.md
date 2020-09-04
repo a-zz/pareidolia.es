@@ -14,7 +14,7 @@ When someone's happened to study [thermodynamics](https://en.wikipedia.org/wiki/
 
 The development of thermodynamics was originally aimed precisely at improving the thermal efficiency of steam engines, but the mind blowing matter about it is that it turned to be universally applicable to any process involving energy (i.e. any process). And the universal consequences of that stated in the paragraph above are: i. nothing has 100% efficiency, there's always a waste (* ); and ii. that waste will ultimately and irreversibly be delivered as heat (**). 
 
-Irreversibility is precisely the key concept for our discussion. Once heat is wasted, the process is irreversible; reciprocally, any irreversible process will waste heat. Don't want to dig deeper into that: it's out of the scope of this article and well beyond my knowledge of thermodynamics. Just keep that idea in mind.
+Irreversibility is precisely the key concept for our discussion. Once heat is wasted, the process is irreversible; reciprocally, any irreversible process will waste heat. Don't want to dig deeper into that: it's out of the scope of this article and well beyond my knowledge of thermodynamics. Just keep the idea in mind.
 
 So I had to make the following objection to Juan Luis' rule of thumb: if all of a computer's power input is delivered as heat (i.e. 0% efficiency), where's the utility of the information processed by that computer? Dunno about that -he said-; but taking it all as waste heat accounts for a nice margin of safety in the design of the cooling system, which is -you know- peace of mind for an engineer.
 
@@ -34,7 +34,7 @@ But what about the utility? There's usually a certain (sometimes a huge) utility
 
 So, to sum up, Juan Luis was right (he usually is): every watt of electric power taken by a computer will end up as waste heat. Utility goes somewhere else, usually outside the data center; but somewhere within our Universe, anyhow, so it's globally balanced.
 
-A final word (and a cliffhanger). As said before, the energy efficiency of computing is improving at a fast pace, and [it's expected to reach Landauer's bound by 2050](https://en.wikipedia.org/wiki/Koomey%27s_law). From them on, thermodynamics will prevent computers from processing more bits per unit of energy. But remember that the energy cost of a bit is only "accounted for" when the bit is discarded; what if computers and algorithms are designed in a way that no bits are ever discarded? With irreversibility out of the scene, the power consumption of computing could eventually (although theoretically) drop to zero. That model is called [reversible computing](https://en.wikipedia.org/wiki/Reversible_computing), and it's a fascinating one. Stuff for a later article, maybe.
+A final word (and a cliffhanger). As said before, the energy efficiency of computing is improving at a fast pace, and [it's expected to reach Landauer's bound by 2050](https://en.wikipedia.org/wiki/Koomey%27s_law). From then on, thermodynamics will prevent computers from processing more bits per unit of energy. But remember that the energy cost of a bit is only "accounted for" when the bit is discarded; what if computers and algorithms are designed in a way that no bits are ever discarded? With irreversibility out of the scene, the power consumption of computing could eventually (although theoretically) drop to zero. That model is called [reversible computing](https://en.wikipedia.org/wiki/Reversible_computing), and it's a fascinating one. Stuff for a later article, maybe.
 
 Notes: 
 
