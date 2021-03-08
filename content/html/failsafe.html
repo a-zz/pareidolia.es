@@ -509,9 +509,9 @@ public void aFunction() throws MyException {
 		have your code tidy, the rollback (or, hopefully, the commit) should
 		be done at the same function opening the transaction, thus functions
 		implementing sub-operations within the transaction should signal with
-		a proper exception whether the transaction should be rollback'ed;
+		a proper exception whether the transaction should be rolled back;
 		maybe a catch-all handler, catch(Exception e), for unanticipated
-		errors should rollback the transaction too, just in case. This
+		errors should roll back the transaction too, just in case. This
 		guarantees data integrity, but that isn't usually enough, probably
 		there're further operations to be done to close the error situation
 		(again, at least the "sorry guy" message), so the exception will
@@ -561,7 +561,7 @@ public void makeItHappen() throws Exception {
 	</code>
 	</pre>
 
-	<p>Your code for commiting, rollback'ing and closing transactions
+	<p>Your code for commiting, rolling back and closing transactions
 		should be specially robust, logging-rich and fail-safe. You need to be
 		really sure about the result of a transaction.</p>
 
@@ -608,9 +608,9 @@ public void makeItHappen() throws Exception {
 			the function stack. But...</li>
 		<br />
 		<li>If you open a transaction in your function, you must provide
-			a try-catch-finally block in order to rollback and finally close it.
+			a try-catch-finally block in order to roll back and finally close it.
 			You probably can't completely solve the error situation there, but
-			you need to catch the exception to rollback the transaction. The
+			you need to catch the exception to roll back the transaction. The
 			exception should be rethrown afterwards for further error processing,
 			if needed.</li>
 		<br />
@@ -643,7 +643,7 @@ public void makeItHappen() throws Exception {
 					checkout for user johndoe: no stock for item #5" and...</li>
 				<br />
 				<li>ERROR-log when you catch the exception upstream. Of course,
-					any mitigating action should be finely log-DEBUG'ged or TRACE'd
+					any mitigating action should be finely DEBUG-logged or TRACE-logged
 					too.</li>
 			</ol>
 		</li>
