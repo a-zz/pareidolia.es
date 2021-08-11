@@ -33,6 +33,7 @@ var site = {
 		{"pageid":"ophtclouds", "title":"Halftone Clouds", "description":"Op-art, pop-art, generated clouds", "date":"202001201530", "content":"ophtclouds.html", "tags":"generative art"},
 		{"pageid":"webcharsets", "title":"Charsets in the web", "description":"Let's be careful out there (encoding wise)", "date":"202005201350", "content":"webcharsets.md", "tags":"the web;coding"},
 		{"pageid":"landauer", "title":"The cost of a bit (or the thermodynamics of computing)", "description":"IT thermodynamics for dummies", "date":"202009041805", "content":"landauer.md", "tags":"information theory;physics"},
+		{"pageid":"recharsetting", "title":"Re-charsetting", "description":"Even more fun with charsets", "date":"202108111915", "content":"recharsetting.html", "tags":"coding"},
 	]	
 }
 /* ************************************************************************** */

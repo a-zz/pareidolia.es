@@ -1,0 +1,69 @@
+<meta charset="utf-8">
+<h1>Re-charsetting</h1>
+<style>
+  a#replchar:hover { text-decoration: none; }
+</style>
+<p>
+  A followup on <a href="index.html?webcharsets">Charsets in the web</a>.
+</p>
+
+<p>
+  <div style="float:left; margin-right: 0.25em; font-size:600%">
+    <a href="https://en.wikipedia.org/wiki/Specials_(Unicode_block)#Replacement_character" id="replchar">�</a>
+  </div>
+  <div>
+    What if you need to change your whole application (source code) charset? If english is your mother tongue, not too much to worry about; otherwise brace for impact! 
+    <br><br>
+    I just came out from such a task in my organization's central management system, which comprises several applications under a single (source-code-wise) medium-size project. Being a J2EE application, its official charset's traditionally been that of <a href="http://tomcat.apache.org/">Tomcat</a>, <a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>; but in our interconnected world we recently found it would be easier and more efficient to have it converted into <a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a>. That turned out to be a time-consuming and difficult-to-manage task. All in all it's been fun; but hard, mind-unseating work too.
+</p>
+
+<p>
+  ISO-8859-1 and UTF-8 share a common subset for english characters (the original <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>), so text files containing only those don't really need to be converted: they're identical in both charsets. In my organization we aren't that lucky: because of being based in a spanish speaking country (Spain itself), comments and string literals within our source code are in spanish, so most of them feature spanish <a href="https://en.wikipedia.org/wiki/Diacritic">diacritics</a>: accented vowels (áéíóú) and our beloved and idiosyncratic ñ; as well as our (maybe progressively going out of use) opening exclamation and question marks (¡¿). As a consequence, re-encoding from ISO-8859-1 to UTF-8 meant that about half of our source files needed to be converted (such a BIG COMMIT!). That conversion can be very nicely and conveniently done by means of <a href="https://en.wikipedia.org/wiki/Diacritic">iconv</a>, but it isn't enough in some cases: e.g. markup file specifications (HTML, JSP, XML) usually state that a file encoding must be declared <em>within</em>, so those in our project had to be converted <em>and edited</em>. Nothing too hard to achieve with some bash magic; nothing unforeseen either.
+</p>
+
+<p>
+  But we didn't expect some nuisances and weird side issues, several of which account for the aforementioned mind-unseating part. To name a few:
+  <ul style="list-style: none; margin-left: 0; padding-left: 3em; text-indent: -1.5em;">
+    <li>
+      <strong>� Non-english characters in code identifiers.</strong> I personally like to have source code fully written in english: it fits and looks better, <em>flows</em> more nicely with the usually-english language keywords; it's anyway a must if you're to share your work with the world. For our management system, though, as meant for internal and proprietary use only, using spanish for identifiers (classes, members, methods, etc.) and comments can be an acceptable choice; at least it's the choice we initially, and perhaps implicitly, made. It's a common choice among spanish coders, too, especially older ones. The mix of spanish names with english semantics looks <a href="https://en.wikipedia.org/wiki/Macaronic_language">macaronic</a> for sure, but one gets used to it; some coders even like it, as it emphasizes the difference between reserved (language) words and business-related identifiers (again, this is more common among older coders, as a few decades ago code highlighting wasn't as available and expressive as it is nowadays). What I find troublesome and never ever do is using diacritics in identifiers... or so I thought: after an initial iconv run, <a href="https://www.eclipse.org/">Eclipse</a> (our IDE of choice) started showing lots of Java errors due to, well, non-english characters inadvertently poured into code identifiers; my fault in a few cases.
+    </li>
+    <br>
+    <li>
+      <strong>� Code comparison and merging.</strong> This really can grind your gears. <a href="https://en.wikipedia.org/wiki/Git">Git</a> (our versioning system of choice) seems to handle well the differences between differently-encoded files in the working tree, the index and the repository; as far as I know Git works at byte level, so encoding differences are easily detected.
+      <br><br>
+      But showing those differences visually isn't as straightforward; at least it seems to be quite a mess for the Eclipse builtin compare / merge tool. Eclipse usually handles file encodings nicely; those are determined per-file threeway: <em>inherited from container</em> (i.e. matching the project configuration); <em>determined from content-type</em> (e.g. markup files); set specifically for the file. When Eclipse compares two versions of a file it usually does a nice job, but in the case of markup files with different encodings can be a mess. E.g. when comparing a XML file in ISO-8859-1 and UTF-8 Eclipse will usually infer each one's encoding from their embedded <a href="https://www.w3schools.in/xml/declaration/">XML declaration</a> and render it accordingly, so you're looking at two almost identical files (but for the XML declaration itself) bearing actual byte-level differences. A real example:
+      <br><br>
+      <img src="content/img/git_2-eclipse-1.png" alt="Git 2 - Eclipse 1">
+      <br><br>
+      At byte level, the character <em>í</em> within the person's name is different between both files, but Eclipse will show them as unchanged because each one's rendered as per its inferred encoding to be the same glyph. Git correctly spots two lines changed while Eclipse misses one, so you're misled about what you're actually committing. It's even trickier when your project's branched and you need to merge code changes along with encoding changes.
+    </li>
+    <br>
+    <li>
+      <strong>� Ant & Tomcat stubbornness.</strong> All right, our source code is finally converted into UTF-8, our console's locale's set to UTF-8 and source files are correctly read... but <a href="https://ant.apache.org/">Ant</a> (our build tool of choice) fails to compile. Although Ant is running within a UTF-8 session, you still have to add the <span style="font-family:monospace; font-size: 125%;">encoding="UTF-8"</span> parameter to every <span style="font-family:monospace; font-size: 125%;">&lt;javac&gt;</span> task within the build.xml file (which by the way had been previously converted into UTF-8, of course). Don't know why.
+      <br><br>
+      The case for Tomcat is even weirder. Tomcat is run under a JVM launched from an UTF-8 console, JSP files are encoded in UTF-8 and marked up accordingly, generated HTML reaches the browser as UTF-8 and marked up accordingly; everything seems fine... but HTML form submissions reach the servlet code as ISO-8859-1! Again: don't know why. The solution is to implement a filter to convert the HTML request into UTF-8 before is fed into any servlet; an example and solution here: <a href=""ttps://ianpurton.com/struts_utf_8_and_form_submissions/index.html">ttps://ianpurton.com/struts_utf_8_and_form_submissions/index.html</a> (thanks, Ian!). Problem solved; but why should there be such a problem in the first place?!
+    </li>
+    <br>
+    <li>
+      <strong>� Previous data.</strong> Your application is supposed to handle data correctly whichever its encoding, so changing your source charset shouldn't be a problem, right? 
+      <br><br>
+      Well, we found that data handed over by (reasonably well implemented) middleware doesn't pose too much trouble, as that middleware will take care of charset conversion. E.g. data stored in our backend Oracle database is handled without issues as &mdash;I guess&mdash; the JDBC driver does a good job interfacing between the application's and the database's encodings. Data handed over by well-defined web services will come out clean too.
+      <br><br>
+      With regard to file storage, binary files are of course out of the question. Markup files (and derivatives such as OpenDocument files) are encoding-safe because &mdash;as mentioned above&mdash; their encoding is declared within them. On the other hand, plain text files are expected to be troublesome: they don't declare their encodings so, by default, it's assumed they're encoded as per the current o.s. account's locale. Text files handled or produced previously won't match our new application encoding! The brute force solution is to convert all previous data, which can or can't be feasible (it actually isn't for us). A more efficient approach is perhaps revamping the application text-file handling code to fall back to the old encoding if it happens that reading a file as per the new encoding fails; the JRE provides means for that under the java.nio.charset package. 
+      <br><br>
+      Is that all? That figures, but... what about hashed database-stored strings? Practically and plainly speaking: passwords! That was a fully unexpected and unrecoverable side effect. As said before, database-stored strings are nicely handled by the database driver whichever the application encoding is. That would be the case for database-stored passwords... but for the fact that they're (they MUST, they REALLY HAVE TO) be hashed before storage. In our system this is done by means of the java.security.MessageDigest class, which operates on the binary representation of strings; therefore, the same string under different encodings will yield different hashes. I.e. passwords hashed under the old encoding just won't match in the new one (provided they contain non-english characters, of course), no matter which hash algorithm. This accounts for an unrecoverable data loss, as password-safe hash functions are (they REALLY HAVE TO BE) asymmetrical, so there's no way to migrate previously stored passwords. You'll need to tell your users to set new passwords (which can be inconvenient, but not bad practice anyhow).
+    </li>
+  </ul>
+</p>
+
+<p>
+  So, the summary (and the lesson):
+  <ul>
+    <li>
+      When implementing any system from scratch, the choice of encoding is a serious one because changing it afterwards can be a pain. When facing such a choice, UTF-8 may have a head start as it's widely adopted and supported, and it's the preferred encoding for inter-system data exchange. Furthermore, UTF-8, as a part of the <a href="https://en.wikipedia.org/wiki/Unicode">Unicode Standard</a> covers almost all writing systems in use today, and has spare room to include those of ancient languages and future ones. Choose UTF-8 and stay forever.
+    </li>
+    <br>
+    <li>
+      Whichever encoding you finally choose, set it at all levels to avoid conversion overhead and side effects. But consider anyhow that support software (servers, services, libraries) may stick to a different charset and therefore internal code conversion within your system may be unavoidable. You can't prevent that, but being aware of it helps tracking down unexpected issues.
+    </li>
+  </ul>
